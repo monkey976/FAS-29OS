@@ -15,8 +15,8 @@ import axios from '@/plugins/axios'
 const app = createApp(App)
 
 //  统一注册el-icon图标
-for(let iconName in ELIconModules){
-    app.component(iconName,ELIconModules[iconName])
+for (let iconName in ELIconModules) {
+  app.component(iconName, ELIconModules[iconName])
 }
 
 app.use(createPinia())
@@ -25,8 +25,8 @@ app.use(ElementPlus)
 app.use(ELIconModules)
 app.use(router)
 
-app.provide("$axios", axios);
+app.provide('$axios', axios)
 app.mount('#app')
 
 // 全局挂载 axios
-app.config.globalProperties.$axios = axios; //配置axios的全局引用
+app.config.globalProperties.$axios = axios //配置axios的全局引用

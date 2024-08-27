@@ -1,7 +1,7 @@
 <
 <template>
   <el-row :gutter="20" id="indexHtml">
-    <el-col :xs="0" :sm="0" :md="10" :lg="12" :xl="12">
+    <el-col :xs="0" :sm="0" :md="10" :xl="12">
       <div class="grid-content ep-bg-purple" />
       <div class="logoDiv">
         <img src="../assets/img/logo.png" alt="" id="logoImg" />
@@ -11,7 +11,7 @@
         <img src="../assets/svg/login-box-bg.svg" key="1" alt="" />
       </div>
     </el-col>
-    <el-col :xs="24" :sm="24" :md="14" :lg="12" :xl="12" id="loginForm">
+    <el-col :xs="24" :sm="24" :md="14" :xl="12" id="loginForm">
       <div class="grid-content ep-bg-purple" />
       <div class="login">
         <!--设置卡片头部-->
@@ -73,6 +73,8 @@
 import { ref, toRaw, reactive, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
+import { ElNotification } from 'element-plus'
+import { el } from 'element-plus/es/locales.mjs'
 
 const router = useRouter()
 //实体类
@@ -98,8 +100,17 @@ const loginBtnClick = async () => {
     // })
     const response = await axios.get(
       '/Account/CheckLogin/' + loginForm.username + '/' + loginForm.password,
-      {}
+      { withCredentials: true }
     )
+    if (response) {
+      router.push('/home')
+    } else {
+      ElNotification({
+        title: '登录错误',
+        message: '用户名密码错误',
+        type: 'error'
+      })
+    }
     console.log('登录成功:', response.data)
   } catch (error) {
     console.error('登录失败:', error)
@@ -138,8 +149,9 @@ const loginBtnClick = async () => {
   top: 0%;
   width: 450px;
 }
-#indexHtml{
+#indexHtml {
   height: 100%;
+  width: 100%;
 }
 @media (min-width: 1280px) and (max-width: 1535.9px) {
   .at-xl\:max-w-500px {
