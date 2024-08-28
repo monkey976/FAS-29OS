@@ -5,6 +5,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "module": "ESNext", //ts报错不影响代码的提示
 
     "baseUrl": ".",
     "paths": {
