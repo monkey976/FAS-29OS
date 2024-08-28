@@ -25,6 +25,8 @@ app.use(ElementPlus)
 app.use(ELIconModules)
 app.use(router)
 
+import 'virtual:windi.css'
+
 app.provide('$axios', axios)
 app.mount('#app')
 
