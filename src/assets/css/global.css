@@ -1,0 +1,11 @@
+#portalDiv .el-carousel__container {
+  height: 100% !important;
+}
+.contents .el-card__header {
+  border-bottom: none;
+}
+.contents .el-card__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

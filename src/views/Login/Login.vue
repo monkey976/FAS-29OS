@@ -1,7 +1,6 @@
-<
 <template>
   <el-row class="min-h-screen bg-indigo-500">
-    <el-col :span="14" class="flex items-center justify-center">
+    <el-col :xs="0" :sm="0" :md="10" :lg="14" :xl="14" class="flex items-center justify-center">
       <div class="relative flex mx-auto min-h-100vh w-full">
         <div :class="`flex-1 bg-gray-500 bg-opacity-20 relative p-30px lt-xl:hidden`">
           <!-- logo和项目名称 -->
@@ -20,7 +19,14 @@
         </div>
       </div>
     </el-col>
-    <el-col :span="10" class="bg-light-50 flex items-center justify-center flex-col">
+    <el-col
+      :xs="24"
+      :sm="24"
+      :md="14"
+      :lg="10"
+      :xl="10"
+      class="bg-light-50 flex items-center justify-center flex-col"
+    >
       <!-- 右边区域 -->
       <!-- 传递方法给子组件 -->
       <LoginForm v-if="statusHtml === 'login'" :onChange="changeBtnClick" />
