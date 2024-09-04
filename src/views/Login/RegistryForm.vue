@@ -1,4 +1,3 @@
-<
 <template>
   <el-row class="min-h-screen bg-indigo-500 w-[100%]">
     <el-col :span="24" class="bg-light-50 flex items-center justify-center flex-col">

@@ -1,4 +1,3 @@
-<
 <template>
   <el-row class="min-h-screen bg-indigo-500 w-[100%]">
     <el-col :span="24" class="bg-light-50 flex items-center justify-center flex-col">
@@ -50,6 +49,7 @@
 import { ref, reactive, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
+import { setTokenTime } from '@/utils/auth'
 import { ElNotification } from 'element-plus'
 import { el } from 'element-plus/es/locales.mjs'
 
@@ -87,11 +87,15 @@ const loginBtnClick = async () => {
     //     aPassword: loginForm.password
     //   }
     // })
-    const response = await axios.get(
-      '/Account/CheckLogin/' + loginForm.username + '/' + loginForm.password,
-      { withCredentials: true }
-    )
+
+    // const response = await axios.get(
+    //   '/Account/CheckLogin/' + loginForm.username + '/' + loginForm.password,
+    //   { withCredentials: true }
+    // )
+    const response = true
     if (response) {
+      setTokenTime()
+      localStorage.setItem('token', loginForm.username)
       router.push('/home')
     } else {
       ElNotification({
@@ -100,7 +104,7 @@ const loginBtnClick = async () => {
         type: 'error'
       })
     }
-    console.log('登录成功:', response.data)
+    console.log('登录成功:', response)
   } catch (error) {
     console.error('登录失败:', error)
   }
