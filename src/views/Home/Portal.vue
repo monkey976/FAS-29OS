@@ -1,5 +1,5 @@
 <template>
-  <el-row class="h-full">
+  <el-row class="h-full px-[15%]">
     <el-col :span="24" class="h-1/3 mb-[1.5%]">
       <div class="block text-center w-full h-full">
         <span class="demonstration">产品展示</span>

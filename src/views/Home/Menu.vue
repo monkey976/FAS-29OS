@@ -66,17 +66,17 @@ const menuList = reactive([
         routeName: 'portal',
         routeUrl: '/portal',
         children: []
-      },
-      {
-        id: 12,
-        menuName: '工作台',
-        pId: '1',
-        type: 'menu',
-        icon: '',
-        routeName: 'workbench',
-        routeUrl: '/workbench',
-        children: []
       }
+      // {
+      //   id: 12,
+      //   menuName: '工作台',
+      //   pId: '1',
+      //   type: 'menu',
+      //   icon: '',
+      //   routeName: 'workbench',
+      //   routeUrl: '/workbench',
+      //   children: []
+      // }
     ]
   },
   {
@@ -157,6 +157,27 @@ const menuList = reactive([
         icon: '',
         routeName: 'caseHistory',
         routeUrl: '/caseHistory',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 4,
+    menuName: '医学影像模块',
+    pId: '0',
+    type: 'menu',
+    icon: 'List',
+    routeName: '',
+    routeUrl: '',
+    children: [
+      {
+        id: 41,
+        menuName: '医学影像管理',
+        pId: '4',
+        type: 'menu',
+        icon: '',
+        routeName: '3Dmodel',
+        routeUrl: '/3Dmodel',
         children: []
       }
     ]
