@@ -132,25 +132,28 @@ const loginBtnClick = async () => {
       // })
 
       const response = await axios.get(
-        '/Account/CheckLogin/' + loginForm.username + '/' + loginForm.password,
+        '/Authroize/CheckLogin/' + loginForm.username + '/' + loginForm.password,
         { withCredentials: true }
       )
 
       // const response = true
-      if (response) {
+      if (response.Code == 200) {
         setTokenTime()
-        localStorage.setItem('token', loginForm.username)
+        localStorage.setItem('token', response.Token)
         router.push('/home')
       } else {
         ElNotification({
           title: '登录错误',
-          message: '用户名密码错误',
+          message: response.Message,
           type: 'error'
         })
       }
-      console.log('登录成功:', response)
     } catch (error) {
-      console.error('登录失败:', error)
+      ElNotification({
+        title: '登录错误',
+        message: error,
+        type: 'error'
+      })
     }
   }
 }
