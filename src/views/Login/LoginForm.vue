@@ -30,6 +30,11 @@
           >
           </el-input>
         </el-form-item>
+        <div class="flex justify-between items-center">
+          <el-input placeholder="请输入验证码" v-model="loginForm.verifyCode" clearable></el-input>
+          <!-- 使用验证码组件 -->
+          <SidentifyVue :identifyCode="identifyCode" class="code ml-10px" @click="refreshCode" />
+        </div>
         <el-form-item class="w-[100%]">
           <el-button round color="#626aef" class="w-[100%]" type="primary" @click="loginBtnClick()"
             >登 录</el-button
@@ -46,15 +51,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, defineProps } from 'vue'
+import { ref, reactive, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
 import { setTokenTime } from '@/utils/auth'
 import { ElNotification } from 'element-plus'
 import { el } from 'element-plus/es/locales.mjs'
 
+import SidentifyVue from './Sidentify.vue'
+
 const router = useRouter()
 const refThis = ref(null)
+
+let identifyCode = ref('') //图形验证码
+let identifyCodes = ref('1234567890abcdefjhijklinopqrsduvwxyz') //验证码出现的数字和字
+//组件挂载
+onMounted(() => {
+  identifyCode.value = ''
+  makeCode(identifyCodes.value, 4)
+})
+// 生成随机数
+const randomNum = (min, max) => {
+  max = max + 1
+  return Math.floor(Math.random() * (max - min) + min)
+}
+// 随机生成验证码字符串
+const makeCode = (o, l) => {
+  for (let i = 0; i < l; i++) {
+    identifyCode.value += o[randomNum(0, o.length)]
+  }
+}
+// 更新验证码
+const refreshCode = () => {
+  identifyCode.value = ''
+  makeCode(identifyCodes.value, 4)
+}
+
 //实体类（登录）
 const loginForm = reactive({
   username: 'admin',
@@ -74,39 +106,55 @@ const registryBtnClick = (type: string) => {
 
 //登录按钮事件
 const loginBtnClick = async () => {
-  try {
-    //post
-    // const response = await axios.post('/Account/CheckLogin', {
-    //   username: loginForm.username,
-    //   password: loginForm.password
-    // })
-    //get
-    // const response = await axios.get('/Account/CheckLogin', {
-    //   params: {
-    //     aUsername: loginForm.username,
-    //     aPassword: loginForm.password
-    //   }
-    // })
+  //验证验证码不为空
+  if (!loginForm.verifyCode) {
+    ElNotification({ type: 'error', message: '验证码不能为空！' })
+    return
+  }
+  //验证验证码是否正确
+  if (loginForm.verifyCode != identifyCode.value) {
+    ElNotification({ type: 'error', message: '验证码错误' })
+    refreshCode()
+    return
+  } else {
+    try {
+      //post
+      // const response = await axios.post('/Account/CheckLogin', {
+      //   username: loginForm.username,
+      //   password: loginForm.password
+      // })
+      //get
+      // const response = await axios.get('/Account/CheckLogin', {
+      //   params: {
+      //     aUsername: loginForm.username,
+      //     aPassword: loginForm.password
+      //   }
+      // })
 
-    // const response = await axios.get(
-    //   '/Account/CheckLogin/' + loginForm.username + '/' + loginForm.password,
-    //   { withCredentials: true }
-    // )
-    const response = true
-    if (response) {
-      setTokenTime()
-      localStorage.setItem('token', loginForm.username)
-      router.push('/home')
-    } else {
+      const response = await axios.get(
+        '/Authroize/CheckLogin/' + loginForm.username + '/' + loginForm.password,
+        { withCredentials: true }
+      )
+
+      // const response = true
+      if (response.Code == 200) {
+        setTokenTime()
+        localStorage.setItem('token', response.Token)
+        router.push('/home')
+      } else {
+        ElNotification({
+          title: '登录错误',
+          message: response.Message,
+          type: 'error'
+        })
+      }
+    } catch (error) {
       ElNotification({
         title: '登录错误',
-        message: '用户名密码错误',
+        message: error,
         type: 'error'
       })
     }
-    console.log('登录成功:', response)
-  } catch (error) {
-    console.error('登录失败:', error)
   }
 }
 </script>
@@ -146,6 +194,14 @@ const loginBtnClick = async () => {
   height: 100%;
   width: 100%;
 }
+.code {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.login_btn {
+  width: 100%;
+}
+
 @media (min-width: 1280px) and (max-width: 1535.9px) {
   .at-xl\:max-w-500px {
     max-width: 500px;

@@ -9,6 +9,7 @@ import NotFound from '../views/Error/404.vue'
 
 import Portal from '../views/Home/Portal.vue'
 import User from '../views/User/User.vue'
+import TDmodelManage from '../views/TDmodel/TDmodelManage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,7 +34,7 @@ const router = createRouter({
       meta: {
         requiresAuth: true // 需要身份验证
       },
-      redirect: '/user',
+      redirect: '/portal',
       children: [
         {
           path: '/portal',
@@ -47,6 +48,14 @@ const router = createRouter({
           path: '/user',
           name: 'user',
           component: User,
+          meta: {
+            requiresAuth: true // 需要身份验证portal
+          }
+        },
+        {
+          path: '/3Dmodel',
+          name: '3Dmodel',
+          component: TDmodelManage,
           meta: {
             requiresAuth: true // 需要身份验证portal
           }
