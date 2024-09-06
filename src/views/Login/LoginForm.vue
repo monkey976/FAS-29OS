@@ -137,14 +137,14 @@ const loginBtnClick = async () => {
       )
 
       // const response = true
-      if (response.Code == 200) {
+      if (response.code == 200) {
         setTokenTime()
-        localStorage.setItem('token', response.Token)
+        localStorage.setItem('token', response.token)
         router.push('/home')
       } else {
         ElNotification({
           title: '登录错误',
-          message: response.Message,
+          message: response.message,
           type: 'error'
         })
       }

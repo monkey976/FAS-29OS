@@ -5,7 +5,7 @@
         class="mt-[2%]"
         background
         layout="total, sizes, prev, pager, next, jumper"
-        :total="data.length"
+        :total="totalRecords"
         @size-change="handleSizeChange"
         @current-change="handlePageChange"
         :page-sizes="[10, 20, 50, 100]"
@@ -18,8 +18,8 @@
       <el-col class="h-180px" :span="24" v-for="item in paginatedData" :key="item.id">
         <el-名称 class="h-full" shadow="never">
           <div class="flex">
-            <div class="w-[20%]">
-              <img class="py-[10%] px-[5%]" src="/src/assets/img/model1.png" />
+            <div class="w-[165px]">
+              <img class="py-[10%] px-[5%]" :src="filterPath + item.pathAndName" />
             </div>
             <div class="ml-[1%] w-[79%] pt-[2%]">
               <div class="flex justify-between items-center">
@@ -45,12 +45,12 @@ import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
 import { ElNotification } from 'element-plus'
 import { el } from 'element-plus/es/locales.mjs'
-
+import { FILTER_PATH } from '../../utils/constant'
 const router = useRouter()
 
 const currentPage = ref(1)
 const pageSize = ref(10) // 每页显示的卡片数量
-
+const filterPath = FILTER_PATH
 // 定义数据类型
 type DataList = {
   id: number
@@ -67,6 +67,7 @@ type DataList = {
 
 // 获取数据
 const data = ref<DataList[]>([])
+const totalRecords = ref(0)
 const fetchData = async () => {
   const response = await axios.get(
     '/3d_model/pages',
@@ -80,6 +81,7 @@ const fetchData = async () => {
   )
 
   data.value = response.items
+  totalRecords.value = response.totalRecords
 }
 
 //重新加载数据
@@ -90,11 +92,16 @@ const paginatedData = computed(() => data.value)
 //切换页面
 const handlePageChange = (page: number) => {
   currentPage.value = page
+  //重新加载数据
+  fetchData()
 }
 
 //每页展示条数该变
 const handleSizeChange = (newSize) => {
   pageSize.value = newSize
+  currentPage.value = 1
+  //重新加载数据
+  fetchData()
 }
 // console.log(data.value)
 </script>
