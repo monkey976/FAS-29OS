@@ -5,12 +5,16 @@ import { ElNotification } from 'element-plus'
 import Layout from '../views/Home/Layout.vue'
 import Login from '../views/Login/Login.vue'
 
+import LayoutUser from '../views/HomeUser/Layout.vue'
+
 import NotFound from '../views/Error/404.vue'
 
 import Portal from '../views/Home/Portal.vue'
 import User from '../views/User/User.vue'
 import TDmodelManage from '../views/TDmodel/TDmodelManage.vue'
+import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
 
+import PortalUser from '../views/HomeUser/Portal.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -26,6 +30,19 @@ const router = createRouter({
       meta: {
         requiresAuth: true // 需要身份验证
       }
+    },
+    {
+      path: '/homeuser',
+      name: 'homeuser',
+      component: LayoutUser,
+      redirect: '/portaluser',
+      children: [
+        {
+          path: '/portaluser',
+          name: 'portaluser',
+          component: PortalUser
+        }
+      ]
     },
     {
       path: '/home',
@@ -56,6 +73,14 @@ const router = createRouter({
           path: '/3Dmodel',
           name: '3Dmodel',
           component: TDmodelManage,
+          meta: {
+            requiresAuth: true // 需要身份验证portal
+          }
+        },
+        {
+          path: '/3Dmodel/detail',
+          name: '3DmodelDetail',
+          component: TDmodelDetail,
           meta: {
             requiresAuth: true // 需要身份验证portal
           }
