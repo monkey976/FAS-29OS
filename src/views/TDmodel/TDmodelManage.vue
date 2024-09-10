@@ -23,12 +23,16 @@
             </div>
             <div class="ml-[1%] w-[79%] pt-[2%]">
               <div class="flex justify-between items-center">
-                <h3 class="text-blue-500 truncate cursor-pointer">{{ item.hosName }}</h3>
+                <h3 class="text-blue-500 truncate cursor-pointer" @click="gotoDetial(item.id)">
+                  111{{ item.title === '' ? '无标题' : item.title }}
+                </h3>
                 <el-button type="primary" icon="Download" />
               </div>
               <p class="truncate line-clamp-2">{{ item.dataDescription }}</p>
               <span class="flex justify-between items-center">
-                <p>总下载：{{ item.popularity }}次</p>
+                <p>总下载：{{ item.download }}次</p>
+                <p>影像部位：{{ item.dataType }}</p>
+                <p>上传人：{{ item.uploadName }}</p>
                 <p>{{ item.uploadDate }}</p>
               </span>
             </div>
@@ -51,6 +55,7 @@ const router = useRouter()
 const currentPage = ref(1)
 const pageSize = ref(10) // 每页显示的卡片数量
 const filterPath = FILTER_PATH
+
 // 定义数据类型
 type DataList = {
   id: number
@@ -68,6 +73,7 @@ type DataList = {
 // 获取数据
 const data = ref<DataList[]>([])
 const totalRecords = ref(0)
+
 const fetchData = async () => {
   const response = await axios.get(
     '/3d_model/pages',
@@ -103,7 +109,12 @@ const handleSizeChange = (newSize) => {
   //重新加载数据
   fetchData()
 }
-// console.log(data.value)
+
+//点击跳转详情页面
+const gotoDetial = async (id) => {
+  // 通过 query 参数传递 id
+  router.push({ path: '/3Dmodel/detail', query: { dataId: id } })
+}
 </script>
 <style scoped>
 /* 添加你的样式 */

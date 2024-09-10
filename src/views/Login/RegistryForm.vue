@@ -8,8 +8,14 @@
         <span class="h-[1px] w-16 bg-gray-200"></span>
       </div>
       <!-- 注册区域 -->
-      <el-form :model="registryForm" class="w-[50%]">
-        <el-form-item>
+      <el-form
+        :model="registryForm"
+        :rules="rules"
+        label-position="right"
+        label-width="100px"
+        class="w-[50%]"
+      >
+        <el-form-item label="用户名" prop="username">
           <el-input
             prefix-icon="UserFilled"
             v-model.trim="registryForm.username"
@@ -19,7 +25,7 @@
           >
           </el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="密码" prop="password">
           <el-input
             type="password"
             prefix-icon="Lock"
@@ -29,6 +35,37 @@
             clearable
           >
           </el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input
+            type="password"
+            prefix-icon="Lock"
+            v-model="registryForm.confirmPassword"
+            placeholder="请确认密码"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" prop="phone">
+          <el-input
+            v-model="registryForm.phone"
+            prefix-icon="Phone"
+            placeholder="请输入邮箱"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-radio-group v-model="registryForm.sex">
+            <el-radio :label="0">男</el-radio>
+            <el-radio :label="1">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input
+            v-model="registryForm.email"
+            prefix-icon="Message"
+            placeholder="请输入邮箱"
+            clearable
+          ></el-input>
         </el-form-item>
         <el-form-item class="w-[100%]">
           <el-button
@@ -62,9 +99,12 @@ const refThis = ref(null)
 
 //实体类（注册）
 const registryForm = reactive({
-  username: 'newuser',
-  password: '123',
-  verifyCode: ''
+  username: '',
+  password: '',
+  confirmPassword: '',
+  phone: '',
+  sex: 0,
+  email: ''
 })
 //是登录还是注册
 const statusHtml = ref<string>('login')
@@ -77,37 +117,75 @@ const loginBtnClick = (type: string) => {
   props.onChange(type)
 }
 
+const rules = reactive({
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],
+  phone: [
+    { required: true, message: '请输入手机号', trigger: 'blur' },
+    {
+      validator: (rule: any, value: string, callback: (error?: Error) => void) => {
+        const phoneRegex = /^1[3-9]\d{9}$/ // 中国大陆手机号验证规则
+        if (!phoneRegex.test(value)) {
+          callback(new Error('请输入正确的手机号'))
+        } else {
+          callback()
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, message: '密码不能少于6位', trigger: 'blur' }
+  ],
+  confirmPassword: [
+    { required: true, message: '请确认密码', trigger: 'blur' },
+    {
+      validator: (rule: any, value: string, callback: (error?: Error) => void) => {
+        if (value !== registryForm.password) {
+          callback(new Error('两次输入的密码不一致'))
+        } else {
+          callback()
+        }
+      },
+      trigger: 'blur'
+    }
+  ]
+})
+
 //注册按钮事件
 const registryBtnClick = async () => {
   try {
-    //post
-    // const response = await axios.post('/Account/CheckLogin', {
-    //   username: loginForm.username,
-    //   password: loginForm.password
-    // })
-    //get
-    // const response = await axios.get('/Account/CheckLogin', {
-    //   params: {
-    //     aUsername: loginForm.username,
-    //     aPassword: loginForm.password
-    //   }
-    // })
     const response = await axios.get(
-      '/Account/CheckLogin/' + registryForm.username + '/' + registryForm.password,
+      '/Account/CheckRegistry/',
+      {
+        params: {
+          username: registryForm.username,
+          password: registryForm.password,
+          confirmPassword: registryForm.confirmPassword,
+          phone: registryForm.phone,
+          sex: registryForm.sex,
+          email: registryForm.email
+        }
+      },
       { withCredentials: true }
     )
-    if (response) {
-      router.push('/home')
+
+    if (response.code == 200) {
+      router.push('/login')
     } else {
       ElNotification({
         title: '注册错误',
-        message: '用户名重复',
+        message: response.message,
         type: 'error'
       })
     }
-    console.log('注册成功:', response.data)
   } catch (error) {
-    console.error('注册失败:', error)
+    ElNotification({
+      title: '注册错误',
+      message: error,
+      type: 'error'
+    })
   }
 }
 </script>
