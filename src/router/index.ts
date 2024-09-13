@@ -28,7 +28,7 @@ const router = createRouter({
       name: 'index',
       component: Layout,
       meta: {
-        requiresAuth: true // 需要身份验证
+        requiresAuth: false // 需要身份验证
       }
     },
     {
@@ -75,6 +75,14 @@ const router = createRouter({
           component: TDmodelManage,
           meta: {
             requiresAuth: true // 需要身份验证portal
+          }
+        },
+        {
+          path: '/3DPreview',
+          name: '3DPreview',
+          component: TDModelPreview,
+          meta: {
+            requiresAuth: false // 需要身份验证portal
           }
         },
         {
