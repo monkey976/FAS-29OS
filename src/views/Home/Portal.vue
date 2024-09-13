@@ -1,8 +1,8 @@
 <template>
-  <el-row class="h-full px-[15%]">
-    <el-col :span="24" class="h-1/3 mb-[1.5%]">
+  <el-row class="h-full px-[25%]">
+    <el-col :span="24" class="h-1/4 mb-[1.5%]">
       <div class="block text-center w-full h-full">
-        <span class="demonstration">产品展示</span>
+        <span class="text-white">产品展示</span>
         <el-carousel class="h-full" id="portalDiv">
           <el-carousel-item
             v-for="item in 4"
@@ -15,25 +15,62 @@
         </el-carousel>
       </div>
     </el-col>
-    <div class="contents">
-      <el-card
-        shadow="hover"
-        v-for="index in CoreFunctionData"
-        :key="index.id"
-        :id="index.id"
-        :class="
-          index.id % 2 == 0 ? 'box-card w-[49.5%] mt-[1%]' : 'box-card w-[49.5%] mt-[1%] mr-[1%]'
-        "
-      >
-        <template #header>
-          <div class="card-header">
-            <span class="titleStyle">{{ index.title }}</span>
-            <el-button class="button" text>进入</el-button>
+    <el-col :span="24" class="h-[55%] flex">
+      <el-col :span="20">
+        <div class="contents w-full">
+          <div style="display: ruby">
+            <el-card
+              shadow="hover"
+              v-for="index in CoreFunctionData"
+              :key="index.id"
+              :id="index.id"
+              :class="
+                index.id % 2 == 0
+                  ? 'box-card w-[49%] mt-[1%] h-[49.5%]'
+                  : 'box-card w-[49%] mt-[1%] h-[49.5%] mr-[1%]'
+              "
+            >
+              <template #header>
+                <div class="card-header">
+                  <span class="titleStyle truncate">{{ index.title }}</span>
+                  <el-button class="button" text>进入</el-button>
+                </div>
+              </template>
+              <img :src="index.srcUrl" class="image h-195px w-full" />
+            </el-card>
           </div>
-        </template>
-        <img :src="index.srcUrl" class="image h-300px w-full" />
-      </el-card>
-    </div>
+        </div>
+      </el-col>
+      <el-col :span="4">
+        <div class="h-[49.55%]">
+          <el-card shadow="hover" class="box-card w-full h-full mt-[4%]">
+            <template #header>
+              <div class="card-header">
+                <span class="titleStyle">产品介绍</span>
+              </div>
+            </template>
+            <p>这是一段简单的产品介绍</p>
+          </el-card>
+        </div>
+        <div class="h-[49.55%]">
+          <el-card shadow="hover" class="box-card w-full h-full mt-[11%]">
+            <template #header>
+              <div class="card-header">
+                <span class="titleStyle">核心功能介绍</span>
+              </div>
+            </template>
+            <p>这是一段简单的核心功能介绍</p>
+          </el-card>
+        </div>
+      </el-col>
+    </el-col>
+    <el-col :span="24">
+      <el-carousel :interval="4000" type="card" height="200px">
+        <el-carousel-item v-for="item in 6" :key="item">
+          <h3 text="2xl" justify="center">{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
+    </el-col>
   </el-row>
 </template>
 

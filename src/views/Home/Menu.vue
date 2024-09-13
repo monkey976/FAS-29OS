@@ -179,6 +179,16 @@ const menuList = reactive([
         routeName: '3Dmodel',
         routeUrl: '/3Dmodel',
         children: []
+      },
+      {
+        id: 42,
+        menuName: '医学影像上传',
+        pId: '4',
+        type: 'menu',
+        icon: '',
+        routeName: '3Dmodelup',
+        routeUrl: '/3Dmodelup',
+        children: []
       }
     ]
   }
@@ -187,6 +197,7 @@ const menuList = reactive([
 //存当前点击的路径
 const savePath = (path) => {
   sessionStorage.setItem('path', path)
+  defaultActive.value = path
   router.push(path)
 }
 </script>

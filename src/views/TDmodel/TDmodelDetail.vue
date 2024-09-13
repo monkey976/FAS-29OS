@@ -1,24 +1,30 @@
 <template>
   <el-row :gutter="20">
-    <el-col class="h-180px" :span="24" v-for="item in paginatedData" :key="item.id">
-      <el-名称 class="h-full" shadow="never">
+    <el-col class="h-180px" :span="24">
+      <el-card class="h-full" shadow="never">
         <div class="flex">
           <div class="w-[165px]">
-            <img class="py-[10%] px-[5%]" :src="filterPath + item.pathAndName" />
+            <!-- :src="filterPath + data.pathAndName" -->
+            <img
+              class="py-[10%] px-[5%]"
+              src="https://192.168.32.60:7105//Source/Domic/picture/wsm.png"
+            />
           </div>
           <div class="ml-[1%] w-[79%] pt-[2%]">
             <div class="flex justify-between items-center">
-              <h3 class="text-blue-500 truncate cursor-pointer">{{ item.hosName }}</h3>
+              <h3 class="text-blue-500 truncate cursor-pointer">Evan的胸片</h3>
+              <!-- {{ data.hosName }} -->
               <el-button type="primary" icon="Download" />
             </div>
-            <p class="truncate line-clamp-2">{{ item.dataDescription }}</p>
+            <p class="truncate line-clamp-2">这是描述…………………………</p>
+            <!-- {{ data.dataDescription }} -->
             <span class="flex justify-between items-center">
-              <p>总下载：{{ item.popularity }}次</p>
-              <p>{{ item.uploadDate }}</p>
+              <p>总下载：10次</p>
+              <p>2024-09-10</p>
             </span>
           </div>
         </div>
-      </el-名称>
+      </el-card>
     </el-col>
   </el-row>
 </template>
