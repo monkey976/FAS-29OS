@@ -17,6 +17,8 @@ import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
 
 import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
+import NiiLoader from '@/views/Dicom/NiiLoader.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -92,6 +94,15 @@ const router = createRouter({
           path: '/doctor/dicomloader',
           name: 'dicomloader',
           component: DicomLoader,
+          meta: {
+            requiresAuth: false // 需要身份验证portal
+          }
+        }
+        ,
+        {
+          path: '/doctor/niiloader',
+          name: 'niiloader',
+          component: NiiLoader,
           meta: {
             requiresAuth: false // 需要身份验证portal
           }
