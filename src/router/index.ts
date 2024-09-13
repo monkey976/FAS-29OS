@@ -58,7 +58,7 @@ const router = createRouter({
           name: 'portal',
           component: Portal,
           meta: {
-            requiresAuth: true // 需要身份验证portal
+            requiresAuth: true // 需要身份验证
           }
         },
         {
@@ -66,7 +66,7 @@ const router = createRouter({
           name: 'user',
           component: User,
           meta: {
-            requiresAuth: true // 需要身份验证portal
+            requiresAuth: true // 需要身份验证
           }
         },
         {
@@ -74,7 +74,7 @@ const router = createRouter({
           name: '3Dmodel',
           component: TDmodelManage,
           meta: {
-            requiresAuth: true // 需要身份验证portal
+            requiresAuth: true // 需要身份验证
           }
         },
         {
@@ -82,7 +82,7 @@ const router = createRouter({
           name: '3DmodelDetail',
           component: TDmodelDetail,
           meta: {
-            requiresAuth: true // 需要身份验证portal
+            requiresAuth: true // 需要身份验证
           }
         }
       ]
