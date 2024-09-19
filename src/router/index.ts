@@ -16,7 +16,6 @@ import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
 import TDModelPreview from '../views/TDmodel/TDModelPreview.vue'
 import TDModelUpload from '../views/TDmodel/TDModelUpload.vue'
 
-
 import PortalUser from '../views/HomeUser/Portal.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,7 +30,7 @@ const router = createRouter({
       name: 'index',
       component: Layout,
       meta: {
-        requiresAuth: false // 需要身份验证
+        requiresAuth: true // 需要身份验证
       }
     },
     {
@@ -85,7 +84,7 @@ const router = createRouter({
           name: '3DPreview',
           component: TDModelPreview,
           meta: {
-            requiresAuth: false // 需要身份验证portal
+            requiresAuth: true // 需要身份验证
           }
         },
         {
@@ -93,7 +92,7 @@ const router = createRouter({
           name: '3DUpload',
           component: TDModelUpload,
           meta: {
-            requiresAuth: false // 需要身份验证portal
+            requiresAuth: true // 需要身份验证
           }
         },
         {

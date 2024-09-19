@@ -32,125 +32,125 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import '@kitware/vtk.js/Rendering/Profiles/Geometry';
-import vtkFullScreenRenderWindow from '@kitware/vtk.js/Rendering/Misc/FullScreenRenderWindow';
-import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
-import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';
-import vtkSTLReader from '@kitware/vtk.js/IO/Geometry/STLReader';
-import vtkOBJReader from '@kitware/vtk.js/IO/Misc/OBJReader';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import '@kitware/vtk.js/Rendering/Profiles/Geometry'
+import vtkFullScreenRenderWindow from '@kitware/vtk.js/Rendering/Misc/FullScreenRenderWindow'
+import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor'
+import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper'
+import vtkSTLReader from '@kitware/vtk.js/IO/Geometry/STLReader'
+import vtkOBJReader from '@kitware/vtk.js/IO/Misc/OBJReader'
 
 export default {
   name: 'TDModlePreview',
 
   setup() {
-    const vtkContainer = ref(null);
-    const context = ref(null);
-    const modelId = ref('');
-    const representation = ref(2);
+    const vtkContainer = ref(null)
+    const context = ref(null)
+    const modelId = ref('')
+    const representation = ref(2)
 
     function setRepresentation(rep) {
-      representation.value = Number(rep);
+      representation.value = Number(rep)
     }
 
     function loadFile() {
       if (!modelId.value) {
-        alert('Please enter a valid model ID');
-        return;
+        alert('Please enter a valid model ID')
+        return
       }
-      const apiUrl = `https://192.168.32.60:7105/3d_model/preview/${modelId.value}`;
+      const apiUrl = `https://192.168.32.60:7105/3d_model/preview/${modelId.value}`
 
       fetch(apiUrl)
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok')
           }
-          return response.json();
+          return response.json()
         })
-        .then(data => {
-          const fileUrl = "https://192.168.32.60:7105" + data.data.filePath;
+        .then((data) => {
+          const fileUrl = 'https://192.168.32.60:7105' + data.data.filePath
           fetch(fileUrl)
-            .then(response => {
+            .then((response) => {
               if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok')
               }
-              return response.arrayBuffer();
+              return response.arrayBuffer()
             })
-            .then(arrayBuffer => {
-              let vtkReader;
-              const extension = fileUrl.split('.').pop().toLowerCase();
+            .then((arrayBuffer) => {
+              let vtkReader
+              const extension = fileUrl.split('.').pop().toLowerCase()
 
               if (extension === 'stl') {
-                vtkReader = vtkSTLReader.newInstance();
+                vtkReader = vtkSTLReader.newInstance()
               } else if (extension === 'obj') {
-                vtkReader = vtkOBJReader.newInstance();
+                vtkReader = vtkOBJReader.newInstance()
               } else {
-                alert('Unsupported file format');
-                return;
+                alert('Unsupported file format')
+                return
               }
 
-              vtkReader.parseAsArrayBuffer(arrayBuffer);
-              const polyData = vtkReader.getOutputData();
+              vtkReader.parseAsArrayBuffer(arrayBuffer)
+              const polyData = vtkReader.getOutputData()
               if (context.value) {
-                const { mapper, renderWindow, renderer } = context.value;
-                mapper.setInputData(polyData);
-                renderer.resetCamera();
-                renderWindow.render();
+                const { mapper, renderWindow, renderer } = context.value
+                mapper.setInputData(polyData)
+                renderer.resetCamera()
+                renderWindow.render()
               }
             })
-            .catch(error => {
-              console.error('Error loading file:', error);
-            });
+            .catch((error) => {
+              console.error('Error loading file:', error)
+            })
         })
-        .catch(error => {
-          console.error('Error fetching file path:', error);
-        });
+        .catch((error) => {
+          console.error('Error fetching file path:', error)
+        })
     }
 
     onMounted(() => {
       if (!context.value) {
         const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
-          rootContainer: vtkContainer.value,
-        });
+          rootContainer: vtkContainer.value
+        })
 
-        const mapper = vtkMapper.newInstance();
-        const actor = vtkActor.newInstance();
-        actor.setMapper(mapper);
+        const mapper = vtkMapper.newInstance()
+        const actor = vtkActor.newInstance()
+        actor.setMapper(mapper)
 
-        const renderer = fullScreenRenderer.getRenderer();
-        const renderWindow = fullScreenRenderer.getRenderWindow();
+        const renderer = fullScreenRenderer.getRenderer()
+        const renderWindow = fullScreenRenderer.getRenderWindow()
 
-        renderer.addActor(actor);
-        renderer.resetCamera();
-        renderWindow.render();
+        renderer.addActor(actor)
+        renderer.resetCamera()
+        renderWindow.render()
 
         context.value = {
           fullScreenRenderer,
           renderWindow,
           renderer,
           mapper,
-          actor,
-        };
+          actor
+        }
       }
-    });
+    })
 
     onBeforeUnmount(() => {
       if (context.value) {
-        const { fullScreenRenderer, actor, mapper } = context.value;
-        actor.delete();
-        mapper.delete();
-        fullScreenRenderer.delete();
-        context.value = null;
+        const { fullScreenRenderer, actor, mapper } = context.value
+        actor.delete()
+        mapper.delete()
+        fullScreenRenderer.delete()
+        context.value = null
       }
-    });
+    })
 
     return {
       vtkContainer,
       setRepresentation,
       representation,
       loadFile,
-      modelId,
-    };
+      modelId
+    }
   }
 }
 </script>

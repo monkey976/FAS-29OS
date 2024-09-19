@@ -1,8 +1,8 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header class="h-auto"><Header /></el-header>
-      <el-main class="py-0 px-50px h-[calc(100vh-var(--header-height))]">
+      <el-header class="h-[var(--header-height)]"><Header /></el-header>
+      <el-main class="py-0 h-[calc(100vh-var(--header-height)-20px)]">
         <RouterView />
       </el-main>
     </el-container>
