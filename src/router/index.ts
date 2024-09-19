@@ -13,6 +13,8 @@ import Portal from '../views/Home/Portal.vue'
 import User from '../views/User/User.vue'
 import TDmodelManage from '../views/TDmodel/TDmodelManage.vue'
 import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
+import TDModelPreview from '../views/TDmodel/TDModelPreview.vue'
+import TDModelUpload from '../views/TDmodel/TDModelUpload.vue'
 
 import PortalUser from '../views/HomeUser/Portal.vue'
 const router = createRouter({
@@ -73,6 +75,22 @@ const router = createRouter({
           path: '/3Dmodel',
           name: '3Dmodel',
           component: TDmodelManage,
+          meta: {
+            requiresAuth: true // 需要身份验证
+          }
+        },
+        {
+          path: '/3DPreview',
+          name: '3DPreview',
+          component: TDModelPreview,
+          meta: {
+            requiresAuth: true // 需要身份验证
+          }
+        },
+        {
+          path: '/3DUpload',
+          name: '3DUpload',
+          component: TDModelUpload,
           meta: {
             requiresAuth: true // 需要身份验证
           }

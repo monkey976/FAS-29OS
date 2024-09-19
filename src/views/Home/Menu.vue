@@ -189,6 +189,26 @@ const menuList = reactive([
         routeName: '3Dmodelup',
         routeUrl: '/3Dmodelup',
         children: []
+      },
+      {
+        id: 43,
+        menuName: '3D模型上传',
+        pId: '4',
+        type: 'menu',
+        icon: '',
+        routeName: '3DUpload',
+        routeUrl: '/3DUpload',
+        children: []
+      },
+      {
+        id: 44,
+        menuName: '3D模型预览',
+        pId: '4',
+        type: 'menu',
+        icon: '',
+        routeName: '3DPreview',
+        routeUrl: '/3DPreview',
+        children: []
       }
     ]
   }
