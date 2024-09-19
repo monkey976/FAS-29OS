@@ -1,6 +1,7 @@
 <template>
-  <div class="px-[4%]">
-    <div class="flex justify-between items-center">
+  <div class="px-[24%]">
+    <div></div>
+    <div class="flex justify-between items-center mb-10px">
       <el-pagination
         class="mt-[2%]"
         background
@@ -15,10 +16,10 @@
     </div>
 
     <el-row :gutter="20">
-      <el-col class="h-180px" :span="24" v-for="item in paginatedData" :key="item.id">
-        <el-名称 class="h-full" shadow="never">
+      <el-col class="h-180px mb-[1%]" :span="24" v-for="item in paginatedData" :key="item.id">
+        <el-card class="h-full" shadow="never">
           <div class="flex">
-            <div class="w-[165px]">
+            <div class="w-[140px]">
               <img class="py-[10%] px-[5%]" :src="filterPath + item.pathAndName" />
             </div>
             <div class="ml-[1%] w-[79%] pt-[2%]">
@@ -37,7 +38,7 @@
               </span>
             </div>
           </div>
-        </el-名称>
+        </el-card>
       </el-col>
     </el-row>
   </div>

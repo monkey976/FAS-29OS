@@ -6,7 +6,7 @@
       </el-aside>
       <el-container>
         <el-header><Header /></el-header>
-        <el-main class="py-0 px-50px h-[calc(100vh-var(--header-height))]">
+        <el-main class="py-0 px-50px h-[calc(100vh-var(--header-height))] bg-stone-200">
           <RouterView />
         </el-main>
       </el-container>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- logo和项目名称 -->
-    <div class="flex items-center relative text-white p-15px">
+    <div class="flex items-center relative pt-15px">
       <img src="../../assets/img/logo.png" alt="" id="logoImg" />
       <span class="text-20px font-bold">FAS-29OS</span>
     </div>
@@ -24,32 +24,6 @@
         </el-menu-item>
       </template>
     </el-menu>
-    <!-- <el-menu
-      :default-active="defaultActive"
-      active-text-color="#94A3B8"
-      class="el-menu el-menu-vertical-demo dark-mode text-white bg-gray-700"
-      router
-      unique-opened
-    >
-      <el-sub-menu
-        :index="item.id"
-        v-for="item in menuList"
-        :key="item.id"
-        popper-class="dark-mode"
-      >
-        <template #title>
-          <el-icon> <component :is="item.icon" /> </el-icon>
-          <span>{{ item.menuName }}</span>
-        </template>
-        <el-menu-item
-          :index="itemNext.routeUrl"
-          v-for="itemNext in item.children"
-          :key="itemNext.id"
-          @click="savePath(itemNext.routeUrl)"
-          >{{ itemNext.menuName }}</el-menu-item
-        >
-      </el-sub-menu>
-    </el-menu> -->
   </div>
 </template>
 
@@ -65,7 +39,7 @@ const router = useRouter()
 const refThis = ref(null)
 
 const isCollapse = ref(false) //菜单打开展示全还是不打开展示图标
-const defaultActive = ref(sessionStorage.getItem('path') || '/portal')
+const defaultActive = ref(sessionStorage.getItem('path') || '/portaluser')
 const menuList = reactive([
   {
     id: 1,
@@ -73,133 +47,49 @@ const menuList = reactive([
     pId: '0',
     type: 'menu',
     icon: 'location',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 11,
-        menuName: '统一门户',
-        pId: '1',
-        type: 'menu',
-        icon: '',
-        routeName: 'portal',
-        routeUrl: '/portal',
-        children: []
-      }
-      // {
-      //   id: 12,
-      //   menuName: '工作台',
-      //   pId: '1',
-      //   type: 'menu',
-      //   icon: '',
-      //   routeName: 'workbench',
-      //   routeUrl: '/workbench',
-      //   children: []
-      // }
-    ]
+    routeName: 'portaluser',
+    routeUrl: '/portaluser',
+    children: []
   },
   {
     id: 2,
-    menuName: '用户模块',
+    menuName: '新闻中心',
     pId: '0',
     type: 'menu',
-    icon: 'setting',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 21,
-        menuName: '用户管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'user',
-        routeUrl: '/user',
-        children: []
-      },
-      {
-        id: 22,
-        menuName: '部门管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'dept',
-        routeUrl: '/dept',
-        children: []
-      },
-      {
-        id: 23,
-        menuName: '角色管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'role',
-        routeUrl: '/role',
-        children: []
-      },
-      {
-        id: 24,
-        menuName: '菜单管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'menu',
-        routeUrl: '/menu',
-        children: []
-      }
-    ]
+    icon: 'location',
+    routeName: 'portaluser',
+    routeUrl: '/portaluser',
+    children: []
   },
   {
     id: 3,
-    menuName: '病患模块',
+    menuName: '公司介绍',
     pId: '0',
     type: 'menu',
-    icon: 'List',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 31,
-        menuName: '病患管理',
-        pId: '3',
-        type: 'menu',
-        icon: '',
-        routeName: 'patient',
-        routeUrl: '/patient',
-        children: []
-      },
-      {
-        id: 32,
-        menuName: '病历管理',
-        pId: '3',
-        type: 'menu',
-        icon: '',
-        routeName: 'caseHistory',
-        routeUrl: '/caseHistory',
-        children: []
-      }
-    ]
+    icon: 'location',
+    routeName: 'portaluser',
+    routeUrl: '/portaluser',
+    children: []
   },
   {
     id: 4,
-    menuName: '医学影像模块',
+    menuName: '产品服务',
     pId: '0',
     type: 'menu',
-    icon: 'List',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 41,
-        menuName: '医学影像管理',
-        pId: '4',
-        type: 'menu',
-        icon: '',
-        routeName: '3Dmodel',
-        routeUrl: '/3Dmodel',
-        children: []
-      }
-    ]
+    icon: 'location',
+    routeName: 'portaluser',
+    routeUrl: '/portaluser',
+    children: []
+  },
+  {
+    id: 5,
+    menuName: '联系我们',
+    pId: '0',
+    type: 'menu',
+    icon: 'location',
+    routeName: 'portaluser',
+    routeUrl: '/portaluser',
+    children: []
   }
 ])
 
@@ -218,7 +108,7 @@ const savePath = (path) => {
   --el-menu-text-color: var(--left-menu-text-color);
   --el-menu-hover-text-color: var(--left-menu-text-color);
   --el-menu-bg-color: var(--left-menu-bg-color);
-  --el-menu-hover-bg-color: rgb(0, 0, 0);
+  --el-menu-hover-bg-color: rgb(168, 168, 168);
   --el-menu-active-color: var(--left-menu-text-active-color);
   --el-menu-level: 0;
   border-right: none;

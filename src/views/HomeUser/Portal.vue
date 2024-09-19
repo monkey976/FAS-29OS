@@ -1,20 +1,5 @@
 <template>
-  <el-row class="h-full px-[15%]">
-    <el-col :span="24" class="h-1/3 mb-[1.5%]">
-      <div class="block text-center w-full h-full">
-        <span class="demonstration">产品展示</span>
-        <el-carousel class="h-full" id="portalDiv">
-          <el-carousel-item
-            v-for="item in 4"
-            :key="item"
-            class="h-full"
-            :style="{ height: '100%' }"
-          >
-            <img src="/src/assets/img/model1.png" class="w-full" />
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </el-col>
+  <el-row class="h-full px-[25%] py-[5%]">
     <div class="contents">
       <el-card
         shadow="hover"
@@ -22,13 +7,15 @@
         :key="index.id"
         :id="index.id"
         :class="
-          index.id % 2 == 0 ? 'box-card w-[49.5%] mt-[1%]' : 'box-card w-[49.5%] mt-[1%] mr-[1%]'
+          index.id % 2 == 0
+            ? 'box-card w-[49.5%] mt-[1%] border-blue-200 border-3'
+            : 'box-card w-[49.5%] mt-[1%] mr-[1%] border-blue-200 border-3'
         "
       >
         <template #header>
           <div class="card-header">
             <span class="titleStyle">{{ index.title }}</span>
-            <el-button class="button" text>进入</el-button>
+            <el-button class="button" text>了解更多 >></el-button>
           </div>
         </template>
         <img :src="index.srcUrl" class="image h-300px w-full" />
@@ -51,22 +38,22 @@ const currentDate = ref(new Date())
 const CoreFunctionData = reactive([
   {
     id: 1,
-    title: '3D医学影像分割重建',
+    title: '新闻中心',
     srcUrl: '/src/assets/img/3Dmodel.png'
   },
   {
     id: 2,
-    title: '辅助诊断',
+    title: '公司介绍',
     srcUrl: '/src/assets/img/subsidiary.png'
   },
   {
     id: 3,
-    title: '辅助治疗',
+    title: '产品服务',
     srcUrl: '/src/assets/img/heal.png'
   },
   {
     id: 4,
-    title: 'NUSS板模型',
+    title: '联系我们',
     srcUrl: '/src/assets/img/NUSS.png'
   }
 ])
