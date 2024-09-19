@@ -186,8 +186,8 @@ const menuList = reactive([
         pId: '4',
         type: 'menu',
         icon: '',
-        routeName: '3Dmodelup',
-        routeUrl: '/3Dmodelup',
+        routeName: 'doctorDicomloader',
+        routeUrl: '/doctor/dicomloader',
         children: []
       },
       {
