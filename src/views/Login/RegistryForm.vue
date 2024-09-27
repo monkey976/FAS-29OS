@@ -49,7 +49,7 @@
           <el-input
             v-model="registryForm.phone"
             prefix-icon="Phone"
-            placeholder="请输入邮箱"
+            placeholder="请输入手机号"
             clearable
           ></el-input>
         </el-form-item>
@@ -104,7 +104,8 @@ const registryForm = reactive({
   confirmPassword: '',
   phone: '',
   sex: 0,
-  email: ''
+  email: '',
+  role: '医生'
 })
 //是登录还是注册
 const statusHtml = ref<string>('login')
@@ -136,7 +137,12 @@ const rules = reactive({
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码不能少于6位', trigger: 'blur' }
+    { min: 8, message: '密码不能少于8位', trigger: 'blur' },
+    {
+      pattern: /[A-Za-z]/,
+      message: '密码必须包含一个字母',
+      trigger: 'blur'
+    }
   ],
   confirmPassword: [
     { required: true, message: '请确认密码', trigger: 'blur' },
@@ -156,22 +162,20 @@ const rules = reactive({
 //注册按钮事件
 const registryBtnClick = async () => {
   try {
-    const response = await axios.get(
-      '/Account/CheckRegistry/',
+    const response = await axios.post(
+      '/api/auth/register',
       {
-        params: {
-          username: registryForm.username,
-          password: registryForm.password,
-          confirmPassword: registryForm.confirmPassword,
-          phone: registryForm.phone,
-          sex: registryForm.sex,
-          email: registryForm.email
-        }
+        userName: registryForm.username,
+        password: registryForm.password,
+        phoneNumber: registryForm.phone,
+        email: registryForm.email,
+        role: '医生'
       },
       { withCredentials: true }
     )
 
     if (response.code == 200) {
+      loginBtnClick('login')
       router.push('/login')
     } else {
       ElNotification({

@@ -4,6 +4,21 @@
     <div class="flex items-center relative pt-15px">
       <img src="../../assets/img/logo.png" alt="" id="logoImg" />
       <span class="text-20px font-bold">FAS-29OS</span>
+      <div>
+        <el-avatar src="/src/assets/img/userImg.png" />
+      </div>
+      <el-dropdown @command="handleCommand">
+        <span class="el-dropdown-link">
+          {{ userName }}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="profile">个人资料</el-dropdown-item>
+            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
     <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal">
       <template v-for="item in menuList" :key="item.id">
@@ -40,6 +55,21 @@ const refThis = ref(null)
 
 const isCollapse = ref(false) //菜单打开展示全还是不打开展示图标
 const defaultActive = ref(sessionStorage.getItem('path') || '/portaluser')
+
+// 用户名数据，可以从后端获取
+const userName = ref('张三')
+
+// 处理下拉菜单选项的逻辑
+const handleCommand = (command: string) => {
+  if (command === 'profile') {
+    // 处理查看个人资料的逻辑
+    ElMessage.info('跳转到个人资料页面')
+  } else if (command === 'logout') {
+    // 处理退出登录的逻辑
+    ElMessage.success('成功退出登录')
+    // 在这里可以执行具体的退出登录操作，比如清除token，跳转到登录页等
+  }
+}
 const menuList = reactive([
   {
     id: 1,
@@ -119,5 +149,18 @@ img {
 }
 #logoImg {
   width: 50px;
+}
+.header-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.el-avatar {
+  margin-right: 10px;
+}
+
+.el-dropdown-link {
+  cursor: pointer;
 }
 </style>
