@@ -54,7 +54,7 @@
 import { ref, reactive, defineProps, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
-import { setTokenTime } from '@/utils/auth'
+import { setTokenTime, setUserId } from '@/utils/auth'
 import { ElNotification } from 'element-plus'
 import { el } from 'element-plus/es/locales.mjs'
 
@@ -130,16 +130,23 @@ const loginBtnClick = async () => {
       //     aPassword: loginForm.password
       //   }
       // })
-
-      const response = await axios.get(
-        '/Authroize/CheckLogin/' + loginForm.username + '/' + loginForm.password,
+      // localStorage.setItem('token', 'username')
+      // localStorage.setItem('TOKEN_TIME', Date.now())
+      const response = await axios.post(
+        '/api/auth/login/',
+        {
+          userName: loginForm.username,
+          password: loginForm.password
+        },
         { withCredentials: true }
       )
 
       // const response = true
       if (response.code == 200) {
+        //response.code == 200
         setTokenTime()
-        localStorage.setItem('token', response.token)
+        setUserId(response.data.UserId, response.data.UserName)
+        localStorage.setItem('token', response.data.Token)
         router.push('/home')
       } else {
         ElNotification({
