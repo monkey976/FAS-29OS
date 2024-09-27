@@ -95,6 +95,7 @@ const dialogVisible = ref(false)
 
 const userId = getUserId()
 const userName = getUserName()
+const userToken = localStorage.getItem('token')
 
 //实体类（登录）
 const myInfo = reactive({
@@ -156,13 +157,18 @@ const changePassword = () => {
 }
 
 // 退出登录逻辑
-const logout = () => {
+const logout = async () => {
   // 可以在此处处理退出登录的逻辑，比如清除用户会话数据
   try {
-    const response = await axios.post(
-      '/api/auth/login/',
+    const response = await axios.get(
+      '/api/auth/logout/',
       {
-        userId: userId
+        params: {
+          userId: userId
+        },
+        headers: {
+          Authorization: `Bearer ${userToken}` // 添加 Authorization 请求头
+        }
       },
       { withCredentials: true }
     )
