@@ -1,6 +1,5 @@
 <template>
   <div class="common-layout">
-    <el-icon class="el-icon v-icon cursor-pointer"><Fold /></el-icon>
     <Menu />
   </div>
 </template>
