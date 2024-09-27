@@ -56,7 +56,7 @@ const CoreFunctionData = reactive([
   },
   {
     id: 2,
-    title: '辅助诊断',
+    title: '辅助诊断和AIGC NUSS板',
     srcUrl: '/src/assets/img/subsidiary.png'
   },
   {
@@ -66,7 +66,7 @@ const CoreFunctionData = reactive([
   },
   {
     id: 4,
-    title: 'NUSS板模型',
+    title: 'NUSS板设计',
     srcUrl: '/src/assets/img/NUSS.png'
   }
 ])

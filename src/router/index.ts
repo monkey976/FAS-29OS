@@ -18,6 +18,7 @@ import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
 import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
+import LoadSegment from '@/views/PE/LoadSegment.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -103,6 +104,15 @@ const router = createRouter({
           path: '/doctor/niiloader',
           name: 'niiloader',
           component: NiiLoader,
+          meta: {
+            requiresAuth: false // 需要身份验证portal
+          }
+        }
+        ,
+        {
+          path: '/PE/LoadSegment',
+          name: 'loadsegment',
+          component: LoadSegment,
           meta: {
             requiresAuth: false // 需要身份验证portal
           }

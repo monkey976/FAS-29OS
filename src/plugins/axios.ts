@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'https://192.168.32.57:7105',
+  baseURL: 'https://192.168.32.59:7105',
   withCredentials: true, // 允许跨域请求时发送cookie
   timeout: 10000,
   headers: {
