@@ -1,143 +1,107 @@
 <template>
-  <el-row class="h-full px-[25%]">
-    <el-col :span="24" class="h-1/4 mb-[1.5%]">
-      <div class="block text-center w-full h-full">
-        <span class="text-white">产品展示</span>
-        <el-carousel class="h-full" id="portalDiv">
-          <el-carousel-item
-            v-for="item in 4"
-            :key="item"
-            class="h-full"
-            :style="{ height: '100%' }"
-          >
-            <img src="/src/assets/img/model1.png" class="w-full" />
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </el-col>
-    <el-col :span="24" class="h-[55%] flex">
-      <el-col :span="20">
-        <div class="contents w-full">
-          <div style="display: ruby">
-            <el-card
-              shadow="hover"
-              v-for="index in CoreFunctionData"
-              :key="index.id"
-              :id="index.id"
-              :class="
-                index.id % 2 == 0
-                  ? 'box-card w-[49%] mt-[1%] h-[49.5%]'
-                  : 'box-card w-[49%] mt-[1%] h-[49.5%] mr-[1%]'
-              "
-            >
-              <template #header>
-                <div class="card-header">
-                  <span class="titleStyle truncate">{{ index.title }}</span>
-                  <el-button class="button" text>进入</el-button>
+  <div class="p-6">
+    <el-row gutter="20">
+      <!-- 单个卡片 -->
+      <el-col :span="12" v-for="(card, index) in cardList" :key="index" class="pb-20px h-400px">
+        <el-card shadow="hover" class="card-item dark-card h-full">
+          <div class="card-body h-full">
+            <div class="flex flex-col justify-between h-full">
+              <div>
+                <!-- 上侧内容 -->
+                <div class="flex justify-between">
+                  <div class="text-left">
+                    <!-- 左侧内容 -->
+                    <span class="text-white font-bold text-[25px]">{{ card.title }}</span>
+                  </div>
+                  <div class="text-right">
+                    <!-- 右侧内容 -->
+                    <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                  </div>
                 </div>
-              </template>
-              <img :src="index.srcUrl" class="image h-195px w-full" />
-            </el-card>
+              </div>
+              <div>
+                <!-- 下侧内容 -->
+                <div v-for="(link, lIndex) in card.links" :key="lIndex">
+                  <a :href="link.url" class="text-blue-400 hover:text-blue-500">
+                    {{ link.text }} >
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </el-card>
       </el-col>
-      <el-col :span="4">
-        <div class="h-[49.55%]">
-          <el-card shadow="hover" class="box-card w-full h-full mt-[4%]">
-            <template #header>
-              <div class="card-header">
-                <span class="titleStyle">产品介绍</span>
-              </div>
-            </template>
-            <p>这是一段简单的产品介绍</p>
-          </el-card>
-        </div>
-        <div class="h-[49.55%]">
-          <el-card shadow="hover" class="box-card w-full h-full mt-[11%]">
-            <template #header>
-              <div class="card-header">
-                <span class="titleStyle">核心功能介绍</span>
-              </div>
-            </template>
-            <p>这是一段简单的核心功能介绍</p>
-          </el-card>
-        </div>
-      </el-col>
-    </el-col>
-    <el-col :span="24">
-      <el-carousel :interval="4000" type="card" height="200px">
-        <el-carousel-item v-for="item in 6" :key="item">
-          <h3 text="2xl" justify="center">{{ item }}</h3>
-        </el-carousel-item>
-      </el-carousel>
-    </el-col>
-  </el-row>
+    </el-row>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toRaw, reactive, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from '@/plugins/axios'
-import { ElNotification } from 'element-plus'
-import { el } from 'element-plus/es/locales.mjs'
-import '/src/assets/css/global.css'
+import { ref } from 'vue'
 
-const router = useRouter()
-const currentDate = ref(new Date())
-
-const CoreFunctionData = reactive([
+const cardList = ref([
   {
-    id: 1,
-    title: '3D医学影像分割重建',
-    srcUrl: '/src/assets/img/3Dmodel.png'
+    title: '分割重建',
+    platforms: [],
+    image: '/src/assets/img/dicomUp.png',
+    links: [{ text: '新建/导入', url: '/doctor/dicomloader' }]
   },
   {
-    id: 2,
-    title: '辅助诊断',
-    srcUrl: '/src/assets/img/subsidiary.png'
+    title: '辅助诊断和AIGC NUSS板',
+    platforms: [],
+    image: '/src/assets/img/subsidiary.png',
+    links: [
+      { text: '标准骨结构导入（数据库3-22岁）', url: '#' },
+      { text: 'AIGC正常骨结构导入', url: '#' }
+    ]
   },
   {
-    id: 3,
-    title: '辅助治疗',
-    srcUrl: '/src/assets/img/heal.png'
+    title: 'NUSS板设计',
+    platforms: [],
+    image: '/src/assets/img/NUSSDesign.png',
+    links: [
+      { text: '标准NUSS产品库（数据库3-22岁）', url: '/3DPreview' },
+      { text: '导入AIGC-NUSS板', url: '/3DUpload' },
+      { text: '导入本地NUSS模型', url: '/3DUpload' }
+    ]
   },
   {
-    id: 4,
-    title: 'NUSS板模型',
-    srcUrl: '/src/assets/img/NUSS.png'
+    title: '治疗方案',
+    platforms: [],
+    image: '/src/assets/img/heal.png',
+    links: [{ text: '辅助诊断', url: '#' }]
   }
+  // 继续添加其他卡片
 ])
 </script>
+
 <style scoped>
-/* 添加你的样式 */
-.demonstration {
-  color: var(--el-text-color-secondary);
-}
-.titleStyle {
-  font-size: 28px;
-  font-weight: bold;
-}
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  /* line-height: 150px; */
-  margin: 0;
-  text-align: center;
+.card-item {
+  background-color: #1e1e2d;
+  border-radius: 10px;
+  padding: 16px;
 }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.image {
-  width: 60%;
+
+.card-body {
+  margin-top: 12px;
+}
+
+.platform-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+.dark-card {
+  background-color: #1e1e2d;
+  border-radius: 8px;
+}
+
+.text-white {
+  color: #fff;
 }
 </style>

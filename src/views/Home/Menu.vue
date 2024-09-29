@@ -12,24 +12,35 @@
       router
       unique-opened
     >
-      <el-sub-menu
-        :index="item.id"
-        v-for="item in menuList"
-        :key="item.id"
-        popper-class="dark-mode"
-      >
-        <template #title>
-          <el-icon> <component :is="item.icon" /> </el-icon>
-          <span>{{ item.menuName }}</span>
+      <el-menu>
+        <template v-for="item in menuList" :key="item.id">
+          <!-- 如果 item.children 存在，渲染 el-sub-menu -->
+          <el-sub-menu
+            v-if="item.children && item.children.length > 0"
+            :index="item.id"
+            popper-class="dark-mode"
+          >
+            <template #title>
+              <el-icon> <component :is="item.icon" /> </el-icon>
+              <span>{{ item.menuName }}</span>
+            </template>
+            <el-menu-item
+              v-for="itemNext in item.children"
+              :index="itemNext.routeUrl"
+              :key="itemNext.id"
+              @click="savePath(itemNext.routeUrl)"
+            >
+              {{ itemNext.menuName }}
+            </el-menu-item>
+          </el-sub-menu>
+
+          <!-- 如果 item.children 为空，直接渲染 el-menu-item -->
+          <el-menu-item v-else :index="item.routeUrl" @click="savePath(item.routeUrl)">
+            <el-icon> <component :is="item.icon" /> </el-icon>
+            <span>{{ item.menuName }}</span>
+          </el-menu-item>
         </template>
-        <el-menu-item
-          :index="itemNext.routeUrl"
-          v-for="itemNext in item.children"
-          :key="itemNext.id"
-          @click="savePath(itemNext.routeUrl)"
-          >{{ itemNext.menuName }}</el-menu-item
-        >
-      </el-sub-menu>
+      </el-menu>
     </el-menu>
   </div>
 </template>
@@ -54,81 +65,9 @@ const menuList = reactive([
     pId: '0',
     type: 'menu',
     icon: 'location',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 11,
-        menuName: '统一门户',
-        pId: '1',
-        type: 'menu',
-        icon: '',
-        routeName: 'portal',
-        routeUrl: '/portal',
-        children: []
-      }
-      // {
-      //   id: 12,
-      //   menuName: '工作台',
-      //   pId: '1',
-      //   type: 'menu',
-      //   icon: '',
-      //   routeName: 'workbench',
-      //   routeUrl: '/workbench',
-      //   children: []
-      // }
-    ]
-  },
-  {
-    id: 2,
-    menuName: '用户模块',
-    pId: '0',
-    type: 'menu',
-    icon: 'setting',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 21,
-        menuName: '用户管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'user',
-        routeUrl: '/user',
-        children: []
-      },
-      {
-        id: 22,
-        menuName: '部门管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'dept',
-        routeUrl: '/dept',
-        children: []
-      },
-      {
-        id: 23,
-        menuName: '角色管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'role',
-        routeUrl: '/role',
-        children: []
-      },
-      {
-        id: 24,
-        menuName: '菜单管理',
-        pId: '2',
-        type: 'menu',
-        icon: '',
-        routeName: 'menu',
-        routeUrl: '/menu',
-        children: []
-      }
-    ]
+    routeName: 'portal',
+    routeUrl: '/portal',
+    children: []
   },
   {
     id: 3,
@@ -140,16 +79,6 @@ const menuList = reactive([
     routeUrl: '',
     children: [
       {
-        id: 31,
-        menuName: '病患管理',
-        pId: '3',
-        type: 'menu',
-        icon: '',
-        routeName: 'patient',
-        routeUrl: '/patient',
-        children: []
-      },
-      {
         id: 32,
         menuName: '病历管理',
         pId: '3',
@@ -157,57 +86,6 @@ const menuList = reactive([
         icon: '',
         routeName: 'caseHistory',
         routeUrl: '/caseHistory',
-        children: []
-      }
-    ]
-  },
-  {
-    id: 4,
-    menuName: '医学影像模块',
-    pId: '0',
-    type: 'menu',
-    icon: 'List',
-    routeName: '',
-    routeUrl: '',
-    children: [
-      {
-        id: 41,
-        menuName: '医学影像管理',
-        pId: '4',
-        type: 'menu',
-        icon: '',
-        routeName: '3Dmodel',
-        routeUrl: '/3Dmodel',
-        children: []
-      },
-      {
-        id: 42,
-        menuName: '医学影像上传',
-        pId: '4',
-        type: 'menu',
-        icon: '',
-        routeName: 'doctorDicomloader',
-        routeUrl: '/doctor/dicomloader',
-        children: []
-      },
-      {
-        id: 43,
-        menuName: '3D模型上传',
-        pId: '4',
-        type: 'menu',
-        icon: '',
-        routeName: '3DUpload',
-        routeUrl: '/3DUpload',
-        children: []
-      },
-      {
-        id: 44,
-        menuName: '3D模型预览',
-        pId: '4',
-        type: 'menu',
-        icon: '',
-        routeName: '3DPreview',
-        routeUrl: '/3DPreview',
         children: []
       }
     ]
