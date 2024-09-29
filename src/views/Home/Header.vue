@@ -1,5 +1,5 @@
 <template>
-  <div class="flex common-layout justify-between items-center">
+  <div class="flex common-layout justify-between items-center border-b-2">
     <div>
       <el-icon class="el-icon v-icon cursor-pointer"><Fold /></el-icon>
     </div>
@@ -24,7 +24,7 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-dialog v-model="dialogVisible" title="个人信息" width="30%" draggable>
+      <el-dialog v-model="dialogVisible" title="个人信息" width="25%" draggable>
         <!-- 用户详细信息展示 -->
         <div class="flex items-center p-4 bg-white rounded-md">
           <!-- 左侧头像 -->

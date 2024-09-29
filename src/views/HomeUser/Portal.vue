@@ -44,12 +44,12 @@ const CoreFunctionData = reactive([
   {
     id: 2,
     title: '公司介绍',
-    srcUrl: '/src/assets/img/subsidiary.png'
+    srcUrl: '/src/assets/img/subsidiaryImg.png'
   },
   {
     id: 3,
     title: '产品服务',
-    srcUrl: '/src/assets/img/heal.png'
+    srcUrl: '/src/assets/img/healImg.png'
   },
   {
     id: 4,
