@@ -143,16 +143,6 @@ const menuList = reactive([
     children: []
   },
   {
-    id: 2,
-    menuName: '新闻中心',
-    pId: '0',
-    type: 'menu',
-    icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
-    children: []
-  },
-  {
     id: 3,
     menuName: '公司介绍',
     pId: '0',
@@ -165,6 +155,16 @@ const menuList = reactive([
   {
     id: 4,
     menuName: '产品服务',
+    pId: '0',
+    type: 'menu',
+    icon: 'location',
+    routeName: 'portaluser',
+    routeUrl: '/portaluser',
+    children: []
+  },
+  {
+    id: 2,
+    menuName: '新闻中心',
     pId: '0',
     type: 'menu',
     icon: 'location',

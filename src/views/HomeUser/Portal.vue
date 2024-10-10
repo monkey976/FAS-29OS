@@ -1,61 +1,76 @@
 <template>
-  <el-row class="h-full px-[25%] py-[5%]">
-    <div class="contents">
-      <el-card
-        shadow="hover"
-        v-for="index in CoreFunctionData"
-        :key="index.id"
-        :id="index.id"
-        :class="
-          index.id % 2 == 0
-            ? 'box-card w-[49.5%] mt-[1%] border-blue-200 border-3'
-            : 'box-card w-[49.5%] mt-[1%] mr-[1%] border-blue-200 border-3'
-        "
-      >
-        <template #header>
-          <div class="card-header">
-            <span class="titleStyle">{{ index.title }}</span>
-            <el-button class="button" text>了解更多 >></el-button>
+  <div class="w-[80%] mx-auto flex justify-center gap-4 bg-slate-900 text-white p-4">
+    <el-row gutter="20">
+      <!-- 单个卡片 -->
+      <el-col :span="12" v-for="(card, index) in cardList" :key="index" class="pb-20px h-325px">
+        <el-card shadow="hover" class="card-item dark-card h-full">
+          <div class="card-body h-full">
+            <div class="flex flex-col justify-between h-full">
+              <div>
+                <!-- 上侧内容 -->
+                <div class="flex justify-between">
+                  <div class="text-left">
+                    <!-- 左侧内容 -->
+                    <span class="text-white font-bold text-[25px]">{{ card.title }}</span>
+                  </div>
+                  <div class="text-right">
+                    <!-- 右侧内容 -->
+                    <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <!-- 下侧内容 -->
+                <div v-for="(link, lIndex) in card.links" :key="lIndex">
+                  <a :href="link.url" class="text-blue-400 hover:text-blue-500">
+                    {{ link.text }} >
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-        </template>
-        <img :src="index.srcUrl" class="image h-300px w-full" />
-      </el-card>
-    </div>
-  </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toRaw, reactive, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from '@/plugins/axios'
-import { ElNotification } from 'element-plus'
-import { el } from 'element-plus/es/locales.mjs'
-import '/src/assets/css/global.css'
+import { ref } from 'vue'
 
-const router = useRouter()
-const currentDate = ref(new Date())
-
-const CoreFunctionData = reactive([
+const cardList = ref([
   {
-    id: 1,
-    title: '新闻中心',
-    srcUrl: '/src/assets/img/3Dmodel.png'
-  },
-  {
-    id: 2,
     title: '公司介绍',
-    srcUrl: '/src/assets/img/subsidiaryImg.png'
+    platforms: [],
+    image: '/src/assets/img/corporation.png',
+    links: [
+      { text: '公司介绍', url: '#' },
+      { text: '公司治理', url: '#' }
+    ]
   },
   {
-    id: 3,
     title: '产品服务',
-    srcUrl: '/src/assets/img/healImg.png'
+    platforms: [],
+    image: '/src/assets/img/product.png',
+    links: [
+      { text: '产品介绍', url: '#' },
+      { text: '服务介绍', url: '#' },
+      { text: '医生AI诊疗入口', url: '/portal' }
+    ]
   },
   {
-    id: 4,
+    title: '新闻中心',
+    platforms: [],
+    image: '/src/assets/img/new.png',
+    links: [{ text: '查看新闻', url: '/3DPreview' }]
+  },
+  {
     title: '联系我们',
-    srcUrl: '/src/assets/img/NUSS.png'
+    platforms: [],
+    image: '/src/assets/img/connection.png',
+    links: [{ text: '联系我们', url: '#' }]
   }
+  // 继续添加其他卡片
 ])
 </script>
 <style scoped>
@@ -89,5 +104,10 @@ const CoreFunctionData = reactive([
 }
 .image {
   width: 60%;
+}
+.card-item {
+  background-color: #1e1e2d;
+  border-radius: 10px;
+  padding: 16px;
 }
 </style>

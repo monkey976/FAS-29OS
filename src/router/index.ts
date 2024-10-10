@@ -16,7 +16,6 @@ import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
 import TDModelPreview from '../views/TDmodel/TDModelPreview.vue'
 import TDModelUpload from '../views/TDmodel/TDModelUpload.vue'
 
-
 import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
@@ -106,8 +105,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true // 需要身份验证
           }
-        }
-        ,
+        },
         {
           path: '/doctor/dicomloader',
           name: 'dicomloader',
@@ -115,8 +113,7 @@ const router = createRouter({
           meta: {
             requiresAuth: false // 需要身份验证portal
           }
-        }
-        ,
+        },
         {
           path: '/doctor/niiloader',
           name: 'niiloader',
@@ -136,7 +133,7 @@ const router = createRouter({
 })
 // 路由拦截器
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token') //是否有token了
+  const isAuthenticated = localStorage.getItem('token') //是否有token了
   if (isAuthenticated) {
     if (diffTokenTime()) {
       next({ name: 'login' })
@@ -150,7 +147,8 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    if (to.matched.some((record) => record.meta.requiresAuth) && to.path == '/') {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+      //&& to.path == '/'
       next({ name: 'login' })
     } else {
       next()

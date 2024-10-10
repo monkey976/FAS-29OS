@@ -22,7 +22,18 @@
               <div>
                 <!-- 下侧内容 -->
                 <div v-for="(link, lIndex) in card.links" :key="lIndex">
-                  <a :href="link.url" class="text-blue-400 hover:text-blue-500">
+                  <a
+                    :href="link.url"
+                    v-if="link.type === 0"
+                    class="text-blue-400 hover:text-blue-500"
+                  >
+                    {{ link.text }} >
+                  </a>
+                  <a
+                    :href="link.url"
+                    v-else-if="link.type == 1"
+                    class="text-orange-400 hover:text-orange-500"
+                  >
                     {{ link.text }} >
                   </a>
                 </div>
@@ -43,15 +54,19 @@ const cardList = ref([
     title: '分割重建',
     platforms: [],
     image: '/src/assets/img/dicomUp.png',
-    links: [{ text: '新建/导入', url: '/doctor/dicomloader' }]
+    links: [
+      { text: '新建/本地导入', url: '/doctor/dicomloader', type: 0 },
+      { text: 'PACS 导入', url: '#', type: 1 },
+      { text: 'RIS 系统导入', url: '#', type: 1 }
+    ]
   },
   {
     title: '辅助诊断和AIGC NUSS板',
     platforms: [],
     image: '/src/assets/img/subsidiary.png',
     links: [
-      { text: '标准骨结构导入（数据库3-22岁）', url: '#' },
-      { text: 'AIGC正常骨结构导入', url: '#' }
+      { text: '标准骨结构导入（数据库3-22岁）', url: '#', type: 0 },
+      { text: 'AIGC正常骨结构导入', url: '#', type: 0 }
     ]
   },
   {
@@ -59,16 +74,16 @@ const cardList = ref([
     platforms: [],
     image: '/src/assets/img/NUSSDesign.png',
     links: [
-      { text: '标准NUSS产品库（数据库3-22岁）', url: '/3DPreview' },
-      { text: '导入AIGC-NUSS板', url: '/3DUpload' },
-      { text: '导入本地NUSS模型', url: '/3DUpload' }
+      { text: '标准NUSS产品库（数据库3-22岁）', url: '/3DPreview', type: 0 },
+      { text: '导入AIGC-NUSS板', url: '/3DUpload', type: 0 },
+      { text: '导入本地NUSS模型', url: '/3DUpload', type: 0 }
     ]
   },
   {
     title: '治疗方案',
     platforms: [],
     image: '/src/assets/img/heal.png',
-    links: [{ text: '辅助诊断', url: '#' }]
+    links: [{ text: '辅助诊断', url: '#', type: 0 }]
   }
   // 继续添加其他卡片
 ])
