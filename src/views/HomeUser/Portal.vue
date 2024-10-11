@@ -20,8 +20,15 @@
                 </div>
               </div>
               <div>
+                <div style="position: absolute; width: 390px; top: 74px">
+                  <span class="text-white" style="font-size: 15px">{{ card.body }}</span>
+                </div>
                 <!-- 下侧内容 -->
-                <div v-for="(link, lIndex) in card.links" :key="lIndex">
+                <div
+                  v-for="(link, lIndex) in card.links"
+                  :key="lIndex"
+                  :class="lIndex == 0 ? 'mt-[55px]' : ''"
+                >
                   <a :href="link.url" class="text-blue-400 hover:text-blue-500">
                     {{ link.text }} >
                   </a>
@@ -43,6 +50,7 @@ const cardList = ref([
     title: '公司介绍',
     platforms: [],
     image: '/src/assets/img/corporation.png',
+    body: '我们提供基于Web的医疗影像解决方案，支持跨平台远程访问，实现实时诊断与治疗规划。系统兼容DICOM标准，确保与CT、MRI等设备及PACS系统无缝集成。通过AI算法，系统可自动精准分割复杂解剖结构，提高分析效率。基于AIGC技术，我们为患者提供个性化骨植入物设计，支持3D打印，助力术前模拟与术中应用。云端部署确保数据安全与高效交互，满足现代医疗需求。',
     links: [
       { text: '公司介绍', url: '#' },
       { text: '公司治理', url: '#' }
@@ -52,6 +60,7 @@ const cardList = ref([
     title: '产品服务',
     platforms: [],
     image: '/src/assets/img/product.png',
+    body: '',
     links: [
       { text: '产品介绍', url: '#' },
       { text: '服务介绍', url: '#' },
@@ -62,12 +71,14 @@ const cardList = ref([
     title: '新闻中心',
     platforms: [],
     image: '/src/assets/img/new.png',
+    body: '',
     links: [{ text: '查看新闻', url: '/3DPreview' }]
   },
   {
     title: '联系我们',
     platforms: [],
     image: '/src/assets/img/connection.png',
+    body: '',
     links: [{ text: '联系我们', url: '#' }]
   }
   // 继续添加其他卡片

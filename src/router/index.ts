@@ -20,9 +20,15 @@ import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
 
+import Demo from '@/views/Dicom/demo.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/demo',
+      name: 'demo',
+      component: Demo
+    },
     {
       path: '/login',
       name: 'login',
@@ -148,7 +154,6 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.matched.some((record) => record.meta.requiresAuth)) {
-      //&& to.path == '/'
       next({ name: 'login' })
     } else {
       next()
