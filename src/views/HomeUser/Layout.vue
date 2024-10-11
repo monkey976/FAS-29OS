@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-header class="h-[var(--header-height)]"><Header /></el-header>
-      <el-main class="py-0 h-[calc(100vh-var(--header-height)-20px)]">
+      <el-main class="py-0 h-[calc(100vh-var(--header-height)-20px)] bg-slate-900">
         <RouterView />
       </el-main>
     </el-container>
