@@ -5,7 +5,7 @@
       <div>
         <div class="flex items-center relative pt-15px">
           <img src="../../assets/img/logo.png" alt="" id="logoImg" />
-          <span class="text-20px font-bold">FAS-29OS</span>
+          <span class="text-25px font-bold">FAS-29OS</span>
         </div>
       </div>
       <div>
@@ -14,7 +14,7 @@
             <el-avatar src="/src/assets/img/userImg.png" />
           </div>
           <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link">
+            <span class="el-dropdown-link text-[20px]">
               wushaomin
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -77,26 +77,28 @@
         </div>
       </div>
     </div>
-
-    <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal">
-      <template v-for="item in menuList" :key="item.id">
-        <el-sub-menu v-if="item.children.length > 0" :index="item.id.toString()">
-          <template #title>
-            <el-icon> <component :is="item.icon" /> </el-icon>
-            <span>{{ item.menuName }}</span>
-          </template>
-          <el-menu-item
-            :index="item.id"
-            v-for="itemChildren in item.children"
-            :key="itemChildren.id"
-            >{{ itemChildren.menuName }}
+    <div class="menu-container">
+      <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal">
+        <template v-for="item in menuList" :key="item.id">
+          <el-sub-menu v-if="item.children.length > 0" :index="item.id.toString()">
+            <template #title>
+              <el-icon> <component :is="item.icon" /> </el-icon>
+              <span class="text-[20px]">{{ item.menuName }}</span>
+            </template>
+            <el-menu-item
+              :index="item.id"
+              v-for="itemChildren in item.children"
+              :key="itemChildren.id"
+              class="text-[20px]"
+              >{{ itemChildren.menuName }}
+            </el-menu-item>
+          </el-sub-menu>
+          <el-menu-item v-else :index="item.routeUrl" :key="item.id" class="text-[20px]">
+            {{ item.menuName }}
           </el-menu-item>
-        </el-sub-menu>
-        <el-menu-item v-else :index="item.routeUrl" :key="item.id">
-          {{ item.menuName }}
-        </el-menu-item>
-      </template>
-    </el-menu>
+        </template>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -237,16 +239,6 @@ const viewProfile = async () => {
 <style scoped>
 /* 添加你的样式 */
 
-.el-menu {
-  /* 目录样式 */
-  --el-menu-text-color: var(--left-menu-text-color);
-  --el-menu-hover-text-color: var(--left-menu-text-color);
-  --el-menu-bg-color: var(--left-menu-bg-color);
-  --el-menu-hover-bg-color: rgb(168, 168, 168);
-  --el-menu-active-color: var(--left-menu-text-active-color);
-  --el-menu-level: 0;
-  border-right: none;
-}
 /* 图片大小设置 */
 img {
   max-width: 15%;
@@ -266,5 +258,15 @@ img {
 
 .el-dropdown-link {
   cursor: pointer;
+}
+.menu-container {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中（如果需要） */
+}
+.el-menu-demo {
+  display: flex; /* 设置为flexbox布局 */
+  justify-content: center; /* 使菜单项水平居中 */
+  min-width: 100%; /* 确保菜单容器宽度足够 */
 }
 </style>

@@ -13,15 +13,22 @@
                     <!-- 左侧内容 -->
                     <span class="text-white font-bold text-[25px]">{{ card.title }}</span>
                   </div>
-                  <div class="text-right">
+                  <div class="text-right" v-if="card.images == undefined">
                     <!-- 右侧内容 -->
                     <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                  </div>
+                  <div class="text-right flex" v-else>
+                    <!-- 右侧内容 -->
+                    <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                    <img :src="card.images" class="w-full h-32 object-contain mb-4" />
                   </div>
                 </div>
               </div>
               <div>
                 <div style="position: absolute; width: 390px; top: 74px">
-                  <span class="text-white" style="font-size: 15px">{{ card.body }}</span>
+                  <span class="text-white" style="font-size: 15px"
+                    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ card.body }}</span
+                  >
                 </div>
                 <!-- 下侧内容 -->
                 <div
@@ -59,7 +66,8 @@ const cardList = ref([
   {
     title: '产品服务',
     platforms: [],
-    image: '/src/assets/img/product.png',
+    image: '/src/assets/img/NUSSDesign.png',
+    images: '/src/assets/img/NUSSImg.png',
     body: '',
     links: [
       { text: '产品介绍', url: '#' },

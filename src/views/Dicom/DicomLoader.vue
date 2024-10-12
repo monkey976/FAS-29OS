@@ -4,8 +4,23 @@
 
     <div class="w-1/2 mx-auto flex justify-center gap-4 text-center bg-slate-900 text-white p-4">
       <diV>
-        <label for="" class="label">上传文件：</label>
         <input type="file" class="file-input" multiple @change="handleChange" />
+        <a-upload
+          v-model:file-list="fileList"
+          name="avatar"
+          list-type="picture-card"
+          class="avatar-uploader"
+          :show-upload-list="false"
+          @change="handleChange"
+          multiple
+        >
+          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+          <div v-else>
+            <loading-outlined v-if="loading"></loading-outlined>
+            <plus-outlined v-else></plus-outlined>
+            <div class="ant-upload-text">点击或拖拽文件到此处上传</div>
+          </div>
+        </a-upload>
         <el-upload
           class="upload-demo"
           drag
@@ -25,7 +40,6 @@
       </diV>
 
       <diV>
-        <label class="label">上传文件夹:</label>
         <input
           type="file"
           class="file-input"
@@ -33,15 +47,29 @@
           directory
           @change="handleFolderSelect"
         />
+        <a-upload
+          v-model:file-list="fileList"
+          name="avatar"
+          list-type="picture-card"
+          class="avatar-uploader"
+          :show-upload-list="false"
+          @change="handleFolderSelect"
+          directory
+        >
+          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+          <div v-else>
+            <loading-outlined v-if="loading"></loading-outlined>
+            <plus-outlined v-else></plus-outlined>
+            <div class="ant-upload-text">点击或拖拽文件夹到此处上传</div>
+          </div>
+        </a-upload>
         <el-upload
           class="upload-demo"
           drag
           :on-change="handleFolderSelect"
-          multiple
           :auto-upload="false"
           :show-file-list="false"
           webkitdirectory
-          directory
         >
           <el-icon class="el-icon--upload"><Plus /></el-icon>
           <div class="el-upload__text">点击或拖拽文件夹到此处上传</div>

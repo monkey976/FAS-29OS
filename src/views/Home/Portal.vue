@@ -13,9 +13,14 @@
                     <!-- 左侧内容 -->
                     <span class="text-white font-bold text-[25px]">{{ card.title }}</span>
                   </div>
-                  <div class="text-right">
+                  <div class="text-right" v-if="card.images != ''">
                     <!-- 右侧内容 -->
                     <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                  </div>
+                  <div class="text-right" v-else-if="card.images != ''">
+                    <!-- 右侧内容 -->
+                    <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                    <img :src="card.images" class="w-full h-32 object-contain mb-4" />
                   </div>
                 </div>
               </div>
@@ -64,6 +69,7 @@ const cardList = ref([
     title: '辅助诊断和AIGC NUSS板',
     platforms: [],
     image: '/src/assets/img/subsidiary.png',
+    images: '/src/assets/img/NUSSImg.png',
     links: [
       { text: '标准骨结构导入（数据库3-22岁）', url: '#', type: 0 },
       { text: 'AIGC正常骨结构导入', url: '#', type: 0 }
