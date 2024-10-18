@@ -20,7 +20,13 @@ import TDModelUpload from '../views/TDmodel/TDModelUpload.vue'
 import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
-import LoadSegment from '@/views/PE/LoadSegment.vue'
+import Segment from '@/views/Doctor/Segment.vue'
+
+import CaseNussFusion from '@/views/Doctor/CaseNussFusion.vue'
+import NussFusion from '@/views/Doctor/NussFusion.vue'
+// TwoModelFusion AIGCNussSlicing
+import TwoModelFusion from '@/views/Doctor/TwoModelFusion.vue'
+import AIGCNussSlicing from '@/views/Doctor/AIGCNussSlicing.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -123,16 +129,53 @@ const router = createRouter({
           name: 'niiloader',
           component: NiiLoader,
           meta: {
-            requiresAuth: false // 需要身份验证portal
+            requiresAuth: false 
           }
         }
         ,
         {
-          path: '/PE/LoadSegment',
-          name: 'loadsegment',
-          component: LoadSegment,
+          path: '/doctor/segment',
+          name: 'segment',
+          component: Segment,
           meta: {
-            requiresAuth: false // 需要身份验证portal
+            requiresAuth: false 
+          }
+        }
+        ,
+        {
+          path: '/doctor/casenussfusion',
+          name: 'casenussfusion',
+          component: CaseNussFusion,
+          meta: {
+            requiresAuth: false 
+          }
+        }
+        //NussFusion TwoModelFusion
+        ,
+        {
+          path: '/doctor/NussFusion',
+          name: 'NussFusion',
+          component: NussFusion,
+          meta: {
+            requiresAuth: false 
+          }
+        }
+        ,
+        {
+          path: '/doctor/TwoModelFusion',
+          name: 'TwoModelFusion',
+          component: TwoModelFusion,
+          meta: {
+            requiresAuth: false 
+          }
+        }
+        ,
+        {
+          path: '/doctor/AIGCNussSlicing',
+          name: 'AIGCNussSlicing',
+          component: AIGCNussSlicing,
+          meta: {
+            requiresAuth: false 
           }
         }
       ]

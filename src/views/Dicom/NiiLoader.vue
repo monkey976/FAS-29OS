@@ -6,7 +6,7 @@ import {
   setVolumesForViewports, eventTarget
 } from "@cornerstonejs/core";
 import { cornerstoneNiftiImageVolumeLoader, Enums as niftiEnum } from "@cornerstonejs/nifti-volume-loader";
-
+import axios from 'axios'
 import {onMounted,ref,onBeforeUnmount,onUpdated} from "vue"
 import initCornerstone from "@/cornerstone/helper/initCornerstone";
 import destoryCS from "@/cornerstone/helper/destoryCS";
@@ -38,8 +38,11 @@ async function init() {
 
   // step2: 声明volumeId，格式为 'nifti:'+真实的请求路径
   // 在定义volumeId时使用nifti前缀，便于识别使用的加载器种类
-  const niftiURL =
-    "https://ohif-assets.s3.us-east-2.amazonaws.com/nifti/MRHead.nii.gz";
+  //const niftiURL ="https://ohif-assets.s3.us-east-2.amazonaws.com/nifti/MRHead.nii.gz";
+
+  const niftiURL = "http://localhost:3000/files/4.nii.gz";
+ 
+
   const volumeId = "nifti:" + niftiURL;
   
   await volumeLoader.createAndCacheVolume(volumeId);
@@ -101,7 +104,7 @@ async function init() {
 
 <template>
   <div>
-    <h3>加载渲染NifTi文件</h3>
+    <h1>加载算法调用结果</h1>
     <div
       id="demo-wrap"
     >

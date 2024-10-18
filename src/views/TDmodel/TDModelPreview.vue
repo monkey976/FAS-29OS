@@ -58,7 +58,7 @@ export default {
         alert('Please enter a valid model ID')
         return
       }
-      const apiUrl = `https://192.168.32.60:7105/3d_model/preview/${modelId.value}`
+      const apiUrl = `https://192.168.32.59:7105/3d_model/preview/${modelId.value}`
 
       fetch(apiUrl)
         .then((response) => {
@@ -68,7 +68,7 @@ export default {
           return response.json()
         })
         .then((data) => {
-          const fileUrl = 'https://192.168.32.60:7105' + data.data.filePath
+          const fileUrl = 'https://192.168.32.59:7105' + data.data.filePath
           fetch(fileUrl)
             .then((response) => {
               if (!response.ok) {

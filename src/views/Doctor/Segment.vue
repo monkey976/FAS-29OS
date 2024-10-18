@@ -1,72 +1,134 @@
 <script setup>
 import {
-  cache,
-  Enums as csEnums,
-  getRenderingEngine,
+  volumeLoader,
   RenderingEngine,
+  Enums as csEnums,
   setVolumesForViewports,
-  volumeLoader
+  CONSTANTS, getRenderingEngine,
+  cache
 } from "@cornerstonejs/core";
+import initCornerstone from "@/cornerstone/helper/initCornerstone";
+import destoryCS from "@/cornerstone/helper/destoryCS";
+import useLoading from "@/hooks/useLoading";
+import get3DTestImageId from "@/cornerstone/helper/get3DTestImageId";
+import cornerstoneDICOMImageLoader from "@cornerstonejs/dicom-image-loader";
+
+
 import {
   addTool,
   Enums as cstEnums,
-  PanTool,
-  StackScrollMouseWheelTool,
   ToolGroupManager,
-  ZoomTool
+  TrackballRotateTool
 } from "@cornerstonejs/tools";
-import cornerstoneDICOMImageLoader from "@cornerstonejs/dicom-image-loader";
-import initCornerstone from "@/cornerstone/helper/initCornerstone";
-import { ElMessage } from "element-plus";
-import { ElButton} from "element-plus";
-import axios from '@/plugins/axios'
-import destoryCS from "@/cornerstone/helper/destoryCS";
 import {onMounted,ref,onBeforeUnmount,onUpdated} from "vue"
+import axios from 'axios'
+const volumeName = "CT_VOLUME_ID";
+const volumeLoaderScheme = "cornerstoneStreamingImageVolume";
+const volumeId = `${volumeLoaderScheme}:${volumeName}`;
 
 const renderingEngineId = "my_renderingEngine";
-const viewportId0 = "CT_CORONAL_STACK";
-const viewportId1 = "CT_AXIAL";
-const viewportId2 = "CT_SAGITTAL";
-const viewportId3 = "CT_CORONAL";
-const volumeId = "my_volume_id_2";
-const groupId = "groupId";
-const type = ref("stack");
+let volumeIns = null;
+const toolGroupId = "toolGroupId";
+const viewportId = "3Dvp";
+const presetOptions = CONSTANTS.VIEWPORT_PRESETS.map(item => item.name);
+const preset = ref("CT-Bone");
+const rotate = ref(0);
+const invert = ref(false);
 const fileImageIds = ref([]);
-const formData=ref([]);
-const uploadMessage=ref('');
-const isSuccess=ref(false);
-//const saveDicomToServerResponseData=ref();
-
-const handleSaveDicomToServer = async () => {
-  try {
-    const response = await axios.post(
-      'api/v1/DicomAccess/SaveDicomToServer',formData,
-      {
-        headers:{
-          'Content-Type':'multipart/form-data',
-        },
-      });
-  } catch (error) {
-    console.error('发生异常', error)
-  }
-}
 
 onMounted(() => {
   init();
 });
 
 onBeforeUnmount(() => {
-  destoryCS(renderingEngineId, groupId);
+  destoryCS(renderingEngineId);
 });
 
-onUpdated(() => {
-  if (type.value === "stack") {
-    renderStack(fileImageIds.value);
-  } else {
-    renderVolume(fileImageIds.value);
-  }
+onUpdated(()=>
+{
+
 });
 
+const { loading } = useLoading();
+
+async function init() {
+  await initCornerstone();
+  addTools();
+
+  const imageIds = await get3DTestImageId();
+
+ // const responseData = await axios.get("http://localhost:3000/files");
+  //const imageIds = responseData.data.map(
+  //(item) => `wadouri:http://localhost:3000/files/${item}`);
+
+  await renderVolume(imageIds);
+}
+
+// 设置当前激活的工具 
+function activeTools(){
+    const toolGroup = ToolGroupManager.getToolGroup(toolGroupId);
+  toolGroup.setToolActive(TrackballRotateTool.toolName, {
+    bindings: [
+      {
+        mouseButton: cstEnums.MouseBindings.Primary
+      }
+    ]
+  });
+}
+
+function addTools() {
+  //  顶层API全局添加
+  addTool(TrackballRotateTool);
+  
+  // 创建工具组，在工具组添加
+  const toolGroup = ToolGroupManager.createToolGroup(toolGroupId);
+  toolGroup.addTool(TrackballRotateTool.toolName);
+  
+  toolGroup.addViewport(viewportId, renderingEngineId);
+}
+
+function handleChange(type, value) {
+  const viewport = getRenderingEngine(renderingEngineId).getViewport(viewportId);
+  viewport.setProperties({
+    [type]: value
+  });
+  viewport.render();
+}
+
+// 上传文件夹
+function handleFolderSelect(event){
+  event.stopPropagation();
+  event.preventDefault();
+  cache.purgeCache();
+
+  const files=event.target.files;
+  if(!files.length) return;
+
+  const imageIds = [];  // 用于存储文件URL的数组
+  Array.from(files).forEach(file => {
+  const fileUrl = URL.createObjectURL(file); // 获取文件的 URL
+  const fil= fileUrl.replace('blob:','wadouri:');
+  imageIds.push(fil);  // 将 URL 存入数组
+  });
+
+
+  // const imageIds = [];
+  // Array.from(files).forEach(file => {
+  //   const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file);
+  //   imageIds.push(imageId);
+  // });
+  
+  fileImageIds.value = imageIds;
+  loadAndViewImage(imageIds);
+}
+
+// 加载并且查看Image
+async function loadAndViewImage(imageIds) {
+ // await prefetchMetadataInformation(imageIds);
+  await renderVolume(imageIds);
+}
+
+// 预取元数据信息
 async function prefetchMetadataInformation(imageIdsToPrefetch) {
   for (let i = 0; i < imageIdsToPrefetch.length; i++) {
     await cornerstoneDICOMImageLoader.wadouri.loadImage(imageIdsToPrefetch[i])
@@ -74,281 +136,127 @@ async function prefetchMetadataInformation(imageIdsToPrefetch) {
   }
 }
 
-async function renderStack(imageIds) {
+// 根据ImageIds渲染volume
+async function renderVolume(imageIds){
   if (imageIds?.length === 0) {
     return;
   }
-  
-  const renderingEngine = getRenderingEngine(renderingEngineId);
-  const viewportInput = {
-    viewportId: viewportId0,
-    type: csEnums.ViewportType.STACK,
-    element: document.querySelector("#element0")
-  };
-  renderingEngine.enableElement(viewportInput);
-  
-  const toolGroup = ToolGroupManager.getToolGroup(groupId);
-  toolGroup.addViewport(viewportId0, renderingEngineId);
-  
-  const viewport = renderingEngine.getViewport(viewportId0);
-  viewport.sWidth=400;
-  viewport.sHeight=400;
 
-  await viewport.setStack(imageIds);
-  
-  activeTools();
-  viewport.render();
-}
-
-async function renderVolume(imageIds) {
-  if (imageIds?.length === 0) {
-    return;
-  }
-  
-  if (imageIds.length < 5) {
-    ElMessage.error("请至少选择5张dicom图片进行MPR展示");
-    return;
-  }
-  
-  // 在缓存中删除上一次加载的影像
   if (cache.getVolume(volumeId)) {
     cache.removeVolumeLoadObject(volumeId);
   }
-  
-  const renderingEngine = getRenderingEngine(renderingEngineId);
 
+  const renderingEngine = new RenderingEngine(renderingEngineId);
+  const volume = await volumeLoader.createAndCacheVolume(volumeId, {imageIds});
+  volumeIns = volume;
   const viewportInputArray = [
     {
-      viewportId: viewportId1,
-      type: csEnums.ViewportType.ORTHOGRAPHIC,
+      viewportId: viewportId,
+      type: csEnums.ViewportType.VOLUME_3D,
       element: document.querySelector("#element1"),
       defaultOptions: {
-        orientation: csEnums.OrientationAxis.AXIAL
-      }
-    },
-    {
-      viewportId: viewportId2,
-      type: csEnums.ViewportType.ORTHOGRAPHIC,
-      element: document.querySelector("#element2"),
-      defaultOptions: {
-        orientation: csEnums.OrientationAxis.SAGITTAL
-      }
-    },
-    {
-      viewportId: viewportId3,
-      type: csEnums.ViewportType.ORTHOGRAPHIC,
-      element: document.querySelector("#element3"),
-      defaultOptions: {
-        orientation: csEnums.OrientationAxis.CORONAL
+        orientation: csEnums.OrientationAxis.CORONAL,
+        background: CONSTANTS.BACKGROUND_COLORS.slicer3D
       }
     }
   ];
   renderingEngine.setViewports(viewportInputArray);
   renderingEngine.sWidth=600;
   renderingEngine.sHeight=600;
-  const toolGroup = ToolGroupManager.getToolGroup(groupId);
-  toolGroup.addViewport(viewportId1, renderingEngineId);
-  toolGroup.addViewport(viewportId2, renderingEngineId);
-  toolGroup.addViewport(viewportId3, renderingEngineId);
+
+  await volume.load();
+  await setVolumesForViewports(renderingEngine, [{ volumeId }], [viewportId]);
   
-  const volume = await volumeLoader.createAndCacheVolume(volumeId, {
-    imageIds
+  const viewport = renderingEngine.getViewport(viewportId);
+  viewport.setProperties({
+    preset: preset.value,
   });
-  volume.load();
-  
-  await setVolumesForViewports(
-    renderingEngine,
-    [
-      {
-        volumeId
-      }
-    ],
-    [viewportId1, viewportId2, viewportId3]
-  );
-  
+  viewport.render();
   activeTools();
-  renderingEngine.render();
 }
 
-async function loadAndViewImage(imageIds) {
-  await prefetchMetadataInformation(imageIds);
-  
-  if (type.value === "stack") {
-    await renderStack(imageIds);
-  } else {
-    await renderVolume(imageIds);
-  }
-}
-
-async function init() {
-  await initCornerstone();
-  
-  // 准备一个渲染引擎 => renderingEngine
-  new RenderingEngine(renderingEngineId);
-
-  addTools();
-}
-
-function addTools() {
-  // step1: 全局添加工具
-  addTool(StackScrollMouseWheelTool);
-  addTool(PanTool);
-  addTool(ZoomTool);
-  
-  // step2：为工具组添加工具
-  const toolGroup = ToolGroupManager.createToolGroup(groupId);
-  toolGroup.addTool(StackScrollMouseWheelTool.toolName);
-  toolGroup.addTool(PanTool.toolName);
-  toolGroup.addTool(ZoomTool.toolName);
-  
-  // step4：禁用默认菜单
-  ["element0", "element1", "element2", "element3"].forEach(id => {
-    const dom = document.querySelector(`#${id}`);
-    dom.oncontextmenu = () => false;
-  });
-}
-
-function activeTools() {
-  const toolGroup = ToolGroupManager.getToolGroup(groupId);
-  toolGroup.setToolActive(StackScrollMouseWheelTool.toolName, {
-    bindings: [{
-      mouseButton: cstEnums.MouseBindings.Auxiliary
-    }]
-  });
-  toolGroup.setToolActive(PanTool.toolName, {
-    bindings: [{
-      mouseButton: cstEnums.MouseBindings.Primary
-    }]
-  });
-  toolGroup.setToolActive(ZoomTool.toolName, {
-    bindings: [{
-      mouseButton: cstEnums.MouseBindings.Secondary
-    }]
-  });
-  
-}
-
-//上传文件
-function handleChange(evt) {
-  // 阻止事件冒泡
-  evt.stopPropagation();
-  evt.preventDefault();
-  
-  cache.purgeCache();
-
-  const files = evt.target.files;
-  const i=0;
-  for(let i=0;i<files.length;i++)
-  {
-      formData.value.push({"key":i+1,"value":files[i]});
-  }
-  
-  const imageIds = [];
-  Array.from(files).forEach(file => {
-    const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file);
-    imageIds.push(imageId);
-  });
-  
-  fileImageIds.value = imageIds;
-  loadAndViewImage(imageIds);
-}
-
-//上传文件夹
-function handleFolderSelect(event){
-  event.stopPropagation();
-  event.preventDefault();
-  
-  cache.purgeCache();
-
-  const files=event.target.files;
-  if(!files.length) return;
-
-  const imageIds = [];
-  Array.from(files).forEach(file => {
-    const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file);
-    imageIds.push(imageId);
-  });
-  
-  fileImageIds.value = imageIds;
-  loadAndViewImage(imageIds);
-}
 </script>
 
 <template>
   <div>
-    <h3>DICOM(CT/MRI)上传和预览</h3>
+    <h3>3D Rendering</h3>
     <div class="form">
-      <label for="">点击上传文件：</label>
-      <input
-        type="file"
-        multiple
-        @change="handleChange"
-      >
+      <div class="form-item">
+        <label >点击上传文件: </label>
+        <input type="file" webkitdirectory directory @change="handleFolderSelect" />
 
-      <label >点击上传文件夹: </label>
-      <input type="file" webkitdirectory directory @change="handleFolderSelect" />
-    </div>
-    <div class="btn-wrap">
-      <el-radio-group
-        v-model="type"
-        size="large"
-      >
-        <el-radio
-          label="单层"
-          value="stack"
+      </div>
+      <div class="form-item">
+        <label class="label">preset：</label>
+        <el-select
+          v-model="preset"
+          placeholder="Select"
+          size="large"
+          style="width: 300px"
+          @change="(value) => handleChange('preset',value)"
+        >
+          <el-option
+            v-for="item in presetOptions"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </div>
+      <div class="form-item">
+        <label class="label">Rotate：  </label>
+        <el-slider
+          v-model="rotate"
+          :min="0"
+          :max="360"
+          @input="(value) => handleChange('rotation',value)"
         />
-        <el-radio
-          label="MPR"
-          value="volume"
-        />
-      </el-radio-group>
+      </div>
+      <div class="form-item">
+        <label class="label">颜色反转：</label>
+        <el-radio-group
+          v-model="invert"
+          @change="(value) => handleChange('invert',value)"
+        >
+          <el-radio :value="false">
+            false
+          </el-radio>
+          <el-radio :value="true">
+            true
+          </el-radio>
+        </el-radio-group>
+      </div>
     </div>
     <div id="demo-wrap">
-      <div v-show="type === 'stack'">
-        <div
-          id="element0"
-          class="cornerstone-item"
-        />
-      </div>
-      
-      <div v-show="type === 'volume'">
-        <div
-          id="element1"
-          class="cornerstone-item"
-        />
-        <div
-          id="element2"
-          class="cornerstone-item"
-        />
-        <div
-          id="element3"
-          class="cornerstone-item"
-        />
-      </div>
+      <div
+        id="element1"
+        v-loading="loading"
+        class="cornerstone-item"
+        element-loading-text="Loading..."
+        element-loading-background="rgba(6, 28, 73, 0.2)"
+      />
     </div>
-
-    <div class="file-upload">
-      <el-button round color="#626aef" class="w-[100%]" :disabled="!formData" type="primary" @click="handleSaveDicomToServer()">
-        将Dicom上传至服务器
-      </el-button>
-
-      <p v-if="uploadMessage" :class="{success:isSuccess,error:!isSuccess}">{{uploadMessage}}</p>
-    </div>
-
   </div>
 </template>
 
-<style scoped lang="scss">
-h3 {
-  margin-bottom: 20px;
-}
-
-input {
-  cursor: pointer;
-}
-
-.btn-wrap {
-  margin-top: 10px;
+<style lang="scss" scoped>
+.form {
+  display: flex;
+  margin-top: 20px;
+  
+  .form-item {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-right: 30px;
+    min-width: 300px;
+    
+    .label {
+      width: max-content;
+      min-width: max-content;
+      text-align: right;
+    }
+  }
 }
 
 .cornerstone-item {
@@ -357,46 +265,8 @@ input {
   height: 500px;
   margin-top: 20px;
   margin-right: 20px;
-  margin-left: 0px;
   padding: 20px;
-  border: 2px solid #96CDF2;
+  border: 10px solid #ea359c;
   border-radius: 10px;
-}
-
-#tip {
-  margin-top: 20px;
-  font-size: 14px;
-  
-  p {
-    line-height: 30px;
-    color: #eee;
-  }
-}
-</style>
-
-<style>
-.el-radio__input.is-checked + .el-radio__label {
-  color: #96CDF2;
-}
-
-.el-radio__input.is-checked .el-radio__inner {
-  border-color: #96CDF2;
-  background-color: #96CDF2;
-}
-</style>
-
-<style scoped>
-.file-upload {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.success {
-  color: green;
-}
-.error {
-  color: red;
 }
 </style>

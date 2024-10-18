@@ -151,20 +151,10 @@ async function renderVolume(imageIds) {
   toolGroup.addViewport(viewportId2, renderingEngineId);
   toolGroup.addViewport(viewportId3, renderingEngineId);
   
-  const volume = await volumeLoader.createAndCacheVolume(volumeId, {
-    imageIds
-  });
+  const volume = await volumeLoader.createAndCacheVolume(volumeId, { imageIds});
   volume.load();
   
-  await setVolumesForViewports(
-    renderingEngine,
-    [
-      {
-        volumeId
-      }
-    ],
-    [viewportId1, viewportId2, viewportId3]
-  );
+  await setVolumesForViewports( renderingEngine, [{volumeId} ],[viewportId1, viewportId2, viewportId3]);
   
   activeTools();
   renderingEngine.render();
