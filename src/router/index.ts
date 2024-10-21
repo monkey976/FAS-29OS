@@ -6,6 +6,10 @@ import Layout from '../views/Home/Layout.vue'
 import Login from '../views/Login/Login.vue'
 
 import LayoutUser from '../views/HomeUser/Layout.vue'
+import CompanyIntro from '../views/HomeUser/CompanyIntro.vue'
+import ChairmanSpeech from '../views/HomeUser/ChairmanSpeech.vue'
+import TopicAnalysis from '../views/HomeUser/TopicAnalysis.vue'
+import NewsPage from '../views/HomeUser/NewsPage.vue'
 
 import NotFound from '../views/Error/404.vue'
 
@@ -52,6 +56,26 @@ const router = createRouter({
           path: '/portaluser',
           name: 'portaluser',
           component: PortalUser
+        },
+        {
+          path: '/company',
+          name: 'company',
+          component: CompanyIntro
+        },
+        {
+          path: '/ChairmanSpeech',
+          name: 'ChairmanSpeech',
+          component: ChairmanSpeech
+        },
+        {
+          path: '/TopicAnalysis',
+          name: 'TopicAnalysis',
+          component: TopicAnalysis
+        },
+        {
+          path: '/NewsPage',
+          name: 'NewsPage',
+          component: NewsPage
         }
       ]
     },

@@ -70,6 +70,27 @@ const menuList = reactive([
     children: []
   },
   {
+    id: 2,
+    menuName: '系统管理模块',
+    pId: '0',
+    type: 'menu',
+    icon: 'List',
+    routeName: '',
+    routeUrl: '',
+    children: [
+      {
+        id: 21,
+        menuName: '用户管理',
+        pId: '2',
+        type: 'menu',
+        icon: '',
+        routeName: 'user',
+        routeUrl: '/user',
+        children: []
+      }
+    ]
+  },
+  {
     id: 3,
     menuName: '病患模块',
     pId: '0',

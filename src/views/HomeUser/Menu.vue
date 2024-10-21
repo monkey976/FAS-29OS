@@ -78,7 +78,12 @@
       </div>
     </div>
     <div class="menu-container">
-      <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal">
+      <el-menu
+        :default-active="defaultActive"
+        class="el-menu-demo"
+        mode="horizontal"
+        style="background-color: transparent; border: 0"
+      >
         <template v-for="item in menuList" :key="item.id">
           <el-sub-menu v-if="item.children.length > 0" :index="item.id.toString()">
             <template #title>
@@ -86,14 +91,22 @@
               <span class="text-[20px]">{{ item.menuName }}</span>
             </template>
             <el-menu-item
-              :index="item.id"
               v-for="itemChildren in item.children"
               :key="itemChildren.id"
+              :index="itemChildren.routeUrl"
               class="text-[20px]"
-              >{{ itemChildren.menuName }}
+              @click="navigate(itemChildren.routeUrl)"
+            >
+              {{ itemChildren.menuName }}
             </el-menu-item>
           </el-sub-menu>
-          <el-menu-item v-else :index="item.routeUrl" :key="item.id" class="text-[20px]">
+          <el-menu-item
+            v-else
+            :index="item.routeUrl"
+            :key="item.id"
+            class="text-[20px]"
+            @click="navigate(item.routeUrl)"
+          >
             {{ item.menuName }}
           </el-menu-item>
         </template>
@@ -114,7 +127,7 @@ const router = useRouter()
 const refThis = ref(null)
 
 const isCollapse = ref(false) //菜单打开展示全还是不打开展示图标
-const defaultActive = ref(sessionStorage.getItem('path') || '/portaluser')
+const defaultActive = ref(sessionStorage.getItem('path') || '/homeuser')
 
 const dialogVisible = ref(false)
 // 用户名数据，可以从后端获取
@@ -122,6 +135,12 @@ const userName = ref('wushaomin')
 const userId = 18
 const userToken = 'wushaomin'
 
+//存当前点击的路径
+const navigate = (path) => {
+  sessionStorage.setItem('path', path)
+  defaultActive.value = path
+  router.push(path)
+}
 // 处理下拉菜单选项的逻辑
 const handleCommand = (command: string) => {
   if (command === 'profile') {
@@ -149,10 +168,31 @@ const menuList = reactive([
     menuName: '公司介绍',
     pId: '0',
     type: 'menu',
-    icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
-    children: []
+    icon: '',
+    routeName: '#',
+    routeUrl: '#',
+    children: [
+      {
+        id: 31,
+        menuName: '公司介绍',
+        pId: '3',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'company',
+        routeUrl: '/company',
+        children: []
+      },
+      {
+        id: 32,
+        menuName: '董事长致辞',
+        pId: '3',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'ChairmanSpeech',
+        routeUrl: '/ChairmanSpeech',
+        children: []
+      }
+    ]
   },
   {
     id: 4,
@@ -169,10 +209,31 @@ const menuList = reactive([
     menuName: '新闻中心',
     pId: '0',
     type: 'menu',
-    icon: 'location',
+    icon: '',
     routeName: 'portaluser',
     routeUrl: '/portaluser',
-    children: []
+    children: [
+      {
+        id: 21,
+        menuName: '专题分析',
+        pId: '2',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'TopicAnalysis',
+        routeUrl: '/TopicAnalysis',
+        children: []
+      },
+      {
+        id: 22,
+        menuName: '新闻报道',
+        pId: '2',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'NewsPage',
+        routeUrl: '/NewsPage',
+        children: []
+      }
+    ]
   },
   {
     id: 5,

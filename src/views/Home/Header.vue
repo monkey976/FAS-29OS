@@ -18,13 +18,15 @@
             <!-- 个人信息 -->
             <el-dropdown-item @click="viewProfile(userId)">个人信息</el-dropdown-item>
             <!-- 修改密码 -->
-            <el-dropdown-item @click="changePassword">修改密码</el-dropdown-item>
+            <el-dropdown-item class="text-orange-500" @click="changePassword"
+              >修改密码</el-dropdown-item
+            >
             <!-- 退出登录 -->
             <el-dropdown-item @click="logout()">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-dialog v-model="dialogVisible" title="个人信息" width="25%" draggable>
+      <el-dialog v-model="dialogVisible" title="个人信息" width="35%" draggable>
         <!-- 用户详细信息展示 -->
         <div class="flex items-center p-4 bg-white rounded-md">
           <!-- 左侧头像 -->
@@ -119,14 +121,17 @@ const handleCommand = (command: string) => {
 const viewProfile = async () => {
   dialogVisible.value = true
   try {
-    const response = await axios.get(
-      '/api/account/info',
+    const response = await axios.post(
+      '/api/account/getAccountInfo',
       {
-        params: {
-          userId: userId
-        }
+        userId: userId
       },
-      { withCredentials: true }
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}` // 添加 Authorization 请求头
+        },
+        withCredentials: true
+      }
     )
 
     if (response.code == 200) {
@@ -160,17 +165,15 @@ const changePassword = () => {
 const logout = async () => {
   // 可以在此处处理退出登录的逻辑，比如清除用户会话数据
   try {
-    const response = await axios.get(
-      '/api/auth/logout/',
+    const response = await axios.post(
+      '/api/Auth/Logout',
+      { userId: userId }, // 将 userId 作为请求体参数传递
       {
-        params: {
-          userId: userId
-        },
         headers: {
           Authorization: `Bearer ${userToken}` // 添加 Authorization 请求头
-        }
-      },
-      { withCredentials: true }
+        },
+        withCredentials: true // 确保跨域请求时携带 cookie
+      }
     )
 
     if (response.code == 200) {
@@ -179,7 +182,7 @@ const logout = async () => {
     } else {
       ElNotification({
         title: '退出登录失败',
-        message: response.message,
+        message: response.msg,
         type: 'error'
       })
     }

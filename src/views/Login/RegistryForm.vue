@@ -168,19 +168,24 @@ const registryBtnClick = async () => {
         userName: registryForm.username,
         password: registryForm.password,
         phoneNumber: registryForm.phone,
-        email: registryForm.email,
-        role: '医生'
+        email: registryForm.email
+        // role: '医生'
       },
       { withCredentials: true }
     )
 
     if (response.code == 200) {
+      ElNotification({
+        title: '注册成功',
+        message: '欢迎您登录',
+        type: 'success'
+      })
       loginBtnClick('login')
       router.push('/login')
     } else {
       ElNotification({
         title: '注册错误',
-        message: response.message,
+        message: response.msg,
         type: 'error'
       })
     }
