@@ -26,6 +26,7 @@
     "dcmjs": "^0.30.0",
     "dicomweb-client": "^0.10.4",
     "element-plus": "^2.8.1",
+    "nifti-reader-js": "^0.6.8",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"

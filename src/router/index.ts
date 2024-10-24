@@ -15,19 +15,13 @@ import TDmodelManage from '../views/TDmodel/TDmodelManage.vue'
 import TDmodelDetail from '../views/TDmodel/TDmodelDetail.vue'
 import TDModelPreview from '../views/TDmodel/TDModelPreview.vue'
 import TDModelUpload from '../views/TDmodel/TDModelUpload.vue'
-
-
 import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
 import Segment from '@/views/Doctor/Segment.vue'
-
 import CaseNussFusion from '@/views/Doctor/CaseNussFusion.vue'
-import NussFusion from '@/views/Doctor/NussFusion.vue'
-// TwoModelFusion AIGCNussSlicing
 import TwoModelFusion from '@/views/Doctor/TwoModelFusion.vue'
 import AIGCNussSlicing from '@/views/Doctor/AIGCNussSlicing.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -146,16 +140,6 @@ const router = createRouter({
           path: '/doctor/casenussfusion',
           name: 'casenussfusion',
           component: CaseNussFusion,
-          meta: {
-            requiresAuth: false 
-          }
-        }
-        //NussFusion TwoModelFusion
-        ,
-        {
-          path: '/doctor/NussFusion',
-          name: 'NussFusion',
-          component: NussFusion,
           meta: {
             requiresAuth: false 
           }

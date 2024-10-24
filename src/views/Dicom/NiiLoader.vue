@@ -40,7 +40,7 @@ async function init() {
   // 在定义volumeId时使用nifti前缀，便于识别使用的加载器种类
   //const niftiURL ="https://ohif-assets.s3.us-east-2.amazonaws.com/nifti/MRHead.nii.gz";
 
-  const niftiURL = "http://localhost:3000/files/4.nii.gz";
+  const niftiURL = "http://localhost:3000/files/1.2.840.113564.345042655531.9404.638540378753561018.66_uI_20240615090344_5.nii.gz";
  
 
   const volumeId = "nifti:" + niftiURL;
