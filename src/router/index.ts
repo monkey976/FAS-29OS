@@ -11,7 +11,8 @@ import ChairmanSpeech from '../views/HomeUser/ChairmanSpeech.vue'
 import TopicAnalysis from '../views/HomeUser/TopicAnalysis.vue'
 import NewsPage from '../views/HomeUser/NewsPage.vue'
 import ContactUs from '../views/HomeUser/ContactUs.vue'
-
+import ProductIntro from '../views/HomeUser/ProductIntro.vue'
+import Service from '../views/HomeUser/Service.vue'
 import NotFound from '../views/Error/404.vue'
 
 import Portal from '../views/Home/Portal.vue'
@@ -84,6 +85,16 @@ const router = createRouter({
           path: '/ContactUs',
           name: 'ContactUs',
           component: ContactUs
+        },
+        {
+          path: '/ProductIntro',
+          name: 'ProductIntro',
+          component: ProductIntro
+        },
+        {
+          path: '/Service',
+          name: 'Service',
+          component: Service
         }
       ]
     },
