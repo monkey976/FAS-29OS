@@ -89,8 +89,8 @@ const refreshCode = () => {
 
 //实体类（登录）
 const loginForm = reactive({
-  username: 'admin',
-  password: 'admin123',
+  username: 'wsm',
+  password: 'w123456789',
   verifyCode: ''
 })
 //是登录还是注册
@@ -150,7 +150,7 @@ const loginBtnClick = async () => {
           type: 'success'
         })
         setTokenTime()
-        setUserId(response.data.userId, response.data.userName)
+        setUserId(response.data.userId, response.data.userName, response.data.profilePhoto)
         localStorage.setItem('token', response.data.token)
         router.push('/home')
       } else {

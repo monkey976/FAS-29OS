@@ -2,7 +2,7 @@
   <div>
     <!-- logo和项目名称 -->
     <div class="flex items-center relative text-white p-15px">
-      <img src="../../assets/img/logo.png" alt="" id="logoImg" />
+      <img src="@/assets/img/logo.png" alt="" id="logoImg" />
       <span class="text-20px font-bold">FAS-29OS</span>
     </div>
     <el-menu

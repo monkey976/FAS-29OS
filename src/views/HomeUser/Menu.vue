@@ -4,14 +4,14 @@
     <div class="flex common-layout justify-between items-center">
       <div>
         <div class="flex items-center relative pt-15px">
-          <img src="../../assets/img/logo.png" alt="" id="logoImg" />
+          <img src="@/assets/img/logo.png" alt="" id="logoImg" />
           <span class="text-25px font-bold">FAS-29OS</span>
         </div>
       </div>
       <div>
         <div class="flex items-center relative pt-15px">
           <div>
-            <el-avatar src="/src/assets/img/userImg.png" />
+            <el-avatar src="@/assets/img/userImg.png" />
           </div>
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link text-[20px]">
@@ -34,7 +34,7 @@
             <div class="flex items-center p-4 bg-white rounded-md">
               <!-- 左侧头像 -->
               <div class="w-24 h-24 flex justify-center items-center">
-                <el-avatar src="/src/assets/img/userImg.png" size="large" alt="User Avatar" />
+                <el-avatar src="@/assets/img/userImg.png" size="large" alt="User Avatar" />
               </div>
 
               <!-- 右侧用户信息 -->
@@ -241,8 +241,8 @@ const menuList = reactive([
     pId: '0',
     type: 'menu',
     icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
+    routeName: 'ContactUs',
+    routeUrl: '/ContactUs',
     children: []
   }
 ])

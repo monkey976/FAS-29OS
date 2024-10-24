@@ -37,7 +37,7 @@
                   基于Web的解决方案支持医生与医疗技术人员在任何设备上实时访问系统，无需安装软件，方便远程诊断与治疗规划。
                 </p>
               </div>
-              <img class="feature-image" src="../../assets/img/Company.png" alt="远程访问" />
+              <img class="feature-image" src="@/assets/img/Company.png" alt="远程访问" />
             </div>
           </el-card>
         </el-col>
@@ -51,7 +51,7 @@
                   直接导入DICOM文件，支持与CT、MRI设备及PACS系统的无缝对接，确保数据兼容性和高效性。
                 </p>
               </div>
-              <img class="feature-image" src="../../assets/img/upload.png" alt="DICOM数据导入" />
+              <img class="feature-image" src="@/assets/img/upload.png" alt="DICOM数据导入" />
             </div>
           </el-card>
         </el-col>
@@ -65,7 +65,7 @@
                   通过AI算法自动检测和分割骨骼或组织，相比传统手动分割更快速、精准，尤其适用于复杂解剖结构。
                 </p>
               </div>
-              <img class="feature-image" src="../../assets/img/AI.png" alt="AI分割" />
+              <img class="feature-image" src="@/assets/img/AI.png" alt="AI分割" />
             </div>
           </el-card>
         </el-col>
@@ -79,7 +79,7 @@
                   使用AIGC技术生成与患者解剖结构匹配的个性化骨植入物设计模型，实现个性化定制，并满足手术需求。
                 </p>
               </div>
-              <img class="feature-image" src="../../assets/img/bone.png" alt="AIGC骨植入物设计" />
+              <img class="feature-image" src="@/assets/img/bone.png" alt="AIGC骨植入物设计" />
             </div>
           </el-card>
         </el-col>
@@ -93,7 +93,7 @@
                   系统支持导出STL等格式文件与3D打印设备无缝连接，助力医生进行手术模拟和植入物制作。
                 </p>
               </div>
-              <img class="feature-image" src="../../assets/img/3DPrint.png" alt="3D打印" />
+              <img class="feature-image" src="@/assets/img/3DPrint.png" alt="3D打印" />
             </div>
           </el-card>
         </el-col>
@@ -109,7 +109,7 @@
               </div>
               <img
                 class="feature-image"
-                src="../../assets/img/CloudSecurity.png"
+                src="@/assets/img/CloudSecurity.png"
                 alt="云端与数据安全"
               />
             </div>

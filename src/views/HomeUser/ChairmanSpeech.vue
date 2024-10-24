@@ -3,7 +3,7 @@
     <!-- 董事长信息部分 -->
     <el-main class="mb-10">
       <div class="text-center text-white">
-        <img class="greeting-photo mx-auto" src="../../assets/img/userlogo.png" alt="董事长照片" />
+        <img class="greeting-photo mx-auto" src="@/assets/img/userlogo.png" alt="董事长照片" />
         <p class="text-lg text-light-600 mt-4">董事长 | 创始人 & CEO</p>
         <p class="text-xl font-semibold italic mt-2">“以创新为动力，与时代同行”</p>
       </div>

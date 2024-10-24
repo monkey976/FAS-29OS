@@ -19,7 +19,7 @@
                   </div>
                   <div class="text-right" v-else-if="card.images != ''">
                     <!-- 右侧内容 -->
-                    <img :src="card.image" class="w-full h-32 object-contain mb-4" />
+                    <img :src="logo.pngcard.image" class="w-full h-32 object-contain mb-4" />
                     <img :src="card.images" class="w-full h-32 object-contain mb-4" />
                   </div>
                 </div>
@@ -53,12 +53,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import dicomUp from '@/assets/img/dicomUp.png'
+import subsidiary from '@/assets/img/subsidiary.png'
+import NUSSImg from '@/assets/img/NUSSImg.png'
+import NUSSDesign from '@/assets/img/NUSSDesign.png'
+import heal from '@/assets/img/heal.png'
 
 const cardList = ref([
   {
     title: '分割重建',
     platforms: [],
-    image: '/src/assets/img/dicomUp.png',
+    image: dicomUp,
     links: [
       { text: '新建/本地导入', url: '/doctor/dicomloader', type: 0 },
       { text: 'PACS 导入', url: '#', type: 1 },
@@ -68,8 +73,8 @@ const cardList = ref([
   {
     title: '辅助诊断和AIGC NUSS板',
     platforms: [],
-    image: '/src/assets/img/subsidiary.png',
-    images: '/src/assets/img/NUSSImg.png',
+    image: subsidiary,
+    images: NUSSImg,
     links: [
       { text: '标准骨结构导入（数据库3-22岁）', url: '#', type: 0 },
       { text: 'AIGC正常骨结构导入', url: '#', type: 0 }
@@ -78,7 +83,7 @@ const cardList = ref([
   {
     title: 'NUSS板设计',
     platforms: [],
-    image: '/src/assets/img/NUSSDesign.png',
+    image: NUSSDesign,
     links: [
       { text: '标准NUSS产品库（数据库3-22岁）', url: '/3DPreview', type: 0 },
       { text: '导入AIGC-NUSS板', url: '/3DUpload', type: 0 },
@@ -88,7 +93,7 @@ const cardList = ref([
   {
     title: '治疗方案',
     platforms: [],
-    image: '/src/assets/img/heal.png',
+    image: heal,
     links: [{ text: '辅助诊断', url: '#', type: 0 }]
   }
   // 继续添加其他卡片

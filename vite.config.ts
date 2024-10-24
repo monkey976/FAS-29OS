@@ -4,9 +4,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import WindiCSS from 'vite-plugin-windicss'
+import wasm from 'vite-plugin-wasm'
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), WindiCSS()],
+  plugins: [vue(), vueJsx(), WindiCSS(), wasm()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -28,5 +29,18 @@ export default defineConfig({
     //     }
     //   }
     // }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.png')) {
+            // 返回不带哈希的文件名
+            return 'images/[name][extname]' // 输出路径为 images/yourImage.png
+          }
+          return '[name]-[hash][extname]' // 其他文件保留哈希
+        }
+      }
+    }
   }
 })

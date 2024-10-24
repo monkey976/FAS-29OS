@@ -10,6 +10,7 @@ import CompanyIntro from '../views/HomeUser/CompanyIntro.vue'
 import ChairmanSpeech from '../views/HomeUser/ChairmanSpeech.vue'
 import TopicAnalysis from '../views/HomeUser/TopicAnalysis.vue'
 import NewsPage from '../views/HomeUser/NewsPage.vue'
+import ContactUs from '../views/HomeUser/ContactUs.vue'
 
 import NotFound from '../views/Error/404.vue'
 
@@ -23,6 +24,8 @@ import TDModelUpload from '../views/TDmodel/TDModelUpload.vue'
 import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
+
+import CaseHistory from '@/views/CaseHistory/CaseHistory.vue'
 
 import Demo from '@/views/Dicom/demo.vue'
 const router = createRouter({
@@ -76,6 +79,11 @@ const router = createRouter({
           path: '/NewsPage',
           name: 'NewsPage',
           component: NewsPage
+        },
+        {
+          path: '/ContactUs',
+          name: 'ContactUs',
+          component: ContactUs
         }
       ]
     },
@@ -148,6 +156,14 @@ const router = createRouter({
           path: '/doctor/niiloader',
           name: 'niiloader',
           component: NiiLoader,
+          meta: {
+            requiresAuth: false // 需要身份验证portal
+          }
+        },
+        {
+          path: '/caseHistory',
+          name: 'caseHistory',
+          component: CaseHistory,
           meta: {
             requiresAuth: false // 需要身份验证portal
           }

@@ -55,12 +55,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import corporation from '@/assets/img/corporation.png'
+import newImg from '@/assets/img/new.png'
+import NUSSImg from '@/assets/img/NUSSImg.png'
+import NUSSDesign from '@/assets/img/NUSSDesign.png'
+import connection from '@/assets/img/connection.png'
 
 const cardList = ref([
   {
     title: '公司介绍',
     platforms: [],
-    image: '/src/assets/img/corporation.png',
+    image: corporation,
     body: '',
     links: [
       { text: '公司介绍', url: '/Company' },
@@ -70,8 +75,8 @@ const cardList = ref([
   {
     title: '产品服务',
     platforms: [],
-    image: '/src/assets/img/NUSSDesign.png',
-    images: '/src/assets/img/NUSSImg.png',
+    image: NUSSDesign,
+    images: NUSSImg,
     body: '',
     links: [
       { text: '产品介绍', url: '#' },
@@ -82,7 +87,7 @@ const cardList = ref([
   {
     title: '新闻中心',
     platforms: [],
-    image: '/src/assets/img/new.png',
+    image: newImg,
     body: '',
     links: [
       { text: '专题分析', url: '/TopicAnalysis' },
@@ -92,12 +97,12 @@ const cardList = ref([
   {
     title: '联系我们',
     platforms: [],
-    image: '/src/assets/img/connection.png',
+    image: connection,
     body: '',
     links: [
-      { text: '地址和电话', url: '#' },
+      { text: '联系我们', url: '/ContactUs' },
       { text: '地图导航', url: '#' },
-      { text: '邮件地址', url: '#' }
+      { text: '地址、电话和邮件地址', url: '#' }
     ]
   }
   // 继续添加其他卡片

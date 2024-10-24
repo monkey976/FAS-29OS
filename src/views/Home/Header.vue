@@ -6,7 +6,7 @@
 
     <div class="flex items-center relative pt-15px">
       <div>
-        <el-avatar src="/src/assets/img/userImg.png" />
+        <el-avatar :src="imgUrl('userImg.png')" />
       </div>
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
@@ -31,7 +31,7 @@
         <div class="flex items-center p-4 bg-white rounded-md">
           <!-- 左侧头像 -->
           <div class="w-24 h-24 flex justify-center items-center">
-            <el-avatar src="/src/assets/img/userImg.png" size="large" alt="User Avatar" />
+            <el-avatar :src="myInfo.profilePhoto" size="large" alt="用户头像" />
           </div>
 
           <!-- 右侧用户信息 -->
@@ -58,7 +58,7 @@
               <el-col :span="24">
                 <p class="text-lg">
                   <strong>所属医院:</strong>
-                  <span class="text-gray-900">上海市虹桥医院</span>
+                  <span class="text-gray-900">上海市虹桥医院1</span>
                 </p>
               </el-col>
               <el-col :span="24">
@@ -91,6 +91,8 @@ import { ElNotification } from 'element-plus'
 import { el } from 'element-plus/es/locales.mjs'
 import { getUserId, getUserName } from '@/utils/auth'
 
+const imgUrl = (name) => new URL(`@/assets/img/${name}`, import.meta.url).href
+
 const router = useRouter()
 const refThis = ref(null)
 const dialogVisible = ref(false)
@@ -101,9 +103,11 @@ const userToken = localStorage.getItem('token')
 
 //实体类（登录）
 const myInfo = reactive({
+  userId: '',
   userName: 'admin',
   phoneNumber: 'admin123',
-  email: ''
+  email: '',
+  profilePhoto: ''
 })
 
 // 处理下拉菜单选项的逻辑
@@ -135,9 +139,11 @@ const viewProfile = async () => {
     )
 
     if (response.code == 200) {
+      myInfo.userId = response.data.userId
       myInfo.userName = response.data.userName
       myInfo.phoneNumber = response.data.phoneNumber
       myInfo.email = response.data.email
+      myInfo.profilePhoto = response.data.profilePhoto
     } else {
       dialogVisible.value = false
       ElNotification({
