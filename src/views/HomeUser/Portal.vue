@@ -69,7 +69,7 @@ const cardList = ref([
     body: '',
     links: [
       { text: '公司介绍', url: '/Company' },
-      { text: '董事长致辞', url: '#' }
+      { text: '董事长致辞', url: '/ChairmanSpeech' }
     ]
   },
   {
@@ -79,8 +79,8 @@ const cardList = ref([
     images: NUSSImg,
     body: '',
     links: [
-      { text: '产品介绍', url: '#' },
-      { text: '服务介绍', url: '#' },
+      { text: '产品介绍', url: '/ProductIntro' },
+      { text: '服务介绍', url: '/Service' },
       { text: '医生AI诊疗入口', url: '/portal' }
     ]
   },

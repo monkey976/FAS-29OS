@@ -199,10 +199,31 @@ const menuList = reactive([
     menuName: '产品服务',
     pId: '0',
     type: 'menu',
-    icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
-    children: []
+    icon: '',
+    routeName: '',
+    routeUrl: '',
+    children: [
+      {
+        id: 41,
+        menuName: '产品介绍',
+        pId: '4',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'ProductIntro',
+        routeUrl: '/ProductIntro',
+        children: []
+      },
+      {
+        id: 42,
+        menuName: '服务介绍',
+        pId: '4',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'Service',
+        routeUrl: '/Service',
+        children: []
+      }
+    ]
   },
   {
     id: 2,
