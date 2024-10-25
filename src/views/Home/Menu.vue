@@ -108,7 +108,17 @@ const menuList = reactive([
         routeName: 'caseHistory',
         routeUrl: '/caseHistory',
         children: []
-      }
+      },
+      {
+        id: 33,
+        menuName: '病历管理',
+        pId: '3',
+        type: 'menu',
+        icon: '',
+        routeName: 'caseHistoryManager',
+        routeUrl: '/caseHistoryManager',
+        children: []
+      },
     ]
   }
 ])
