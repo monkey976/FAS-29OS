@@ -26,8 +26,10 @@ import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
 
 import CaseHistory from '@/views/CaseHistory/CaseHistory.vue'
+import CaseHistoryManager from '@/views/CaseHistory/caseHistoryManager.vue'
 
 import Demo from '@/views/Dicom/demo.vue'
+import CaseDetail from '@/views/CaseHistory/CaseDetail.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -167,7 +169,24 @@ const router = createRouter({
           meta: {
             requiresAuth: false // 需要身份验证portal
           }
+        },
+        {
+          path: '/caseHistoryManager',
+          name: 'caseHistoryManager',
+          component: CaseHistoryManager,
+          meta: {
+            requiresAuth: true // 需要身份验证portal
+          }
+        },
+        {
+          path: '/cases/:caseId',
+          name: 'CaseDetails',
+          component: CaseDetail,
+          meta: {
+            requiresAuth: true // 需要身份验证portal
+          }
         }
+        
       ]
     },
     {
