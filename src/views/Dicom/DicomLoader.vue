@@ -547,8 +547,8 @@ input {
 }
 
 .cornerstone-item {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   border: 2px solid #60a5fa;
   border-radius: 15px;
   transition:

@@ -25,6 +25,8 @@
     "@kitware/vtk.js": "^30.4.1",
     "ant-design-vue": "^4.2.5",
     "axios": "^1.7.5",
+    "dcmjs": "^0.34.5",
+    "dicomweb-client": "^0.10.4",
     "echarts": "^5.5.1",
     "element-plus": "^2.8.1",
     "pinia": "^2.1.7",

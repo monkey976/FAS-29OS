@@ -110,12 +110,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
 import { ElNotification, ElMessage } from 'element-plus'
 import { getUserId, getUserName } from '@/utils/auth'
 import { FILTER_PATH_USER } from '../../utils/constant'
+import userMyImg from '@/assets/img/userMyImg.png'
 
 const router = useRouter()
 const dialogVisible = ref(false)
@@ -124,11 +125,17 @@ const dialogVisibleEdit = ref(false)
 const userId = getUserId()
 const userName = getUserName()
 const userToken = localStorage.getItem('token')
-const userImg = localStorage.getItem('userImg') || 'default.jpg' // 默认头像
+const userImg = localStorage.getItem('userImg') || userMyImg // 默认头像
 
-// 使用响应式变量
+// 使用响应式变量，判断是否为空
 const filterPath = ref(`${FILTER_PATH_USER}${userImg}`)
-
+// const filterPath = computed(() => {
+//   if (userImg == undefined || userImg == null || userImg == '' || userImg == 'undefined') {
+//     return userMyImg
+//   } else {
+//     return ref(`${FILTER_PATH_USER}${userImg}`)
+//   }
+// })
 // 存储用户信息
 const myInfo = reactive({
   userId: '',
