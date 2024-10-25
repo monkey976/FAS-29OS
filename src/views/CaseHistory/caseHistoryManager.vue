@@ -33,12 +33,11 @@
       </div>
   
       <el-table :data="casePages" style="width: 100%">
-        <el-table-column prop="dataCode" label="数据编码" />
-        <el-table-column prop="hosName" label="医院名称" />
-        <el-table-column prop="departName" label="科室名称" />
-        <el-table-column prop="patientName" label="患者姓名" />
         <el-table-column prop="patientId" label="患者ID" />
+        <el-table-column prop="patientName" label="姓名" />
+        <el-table-column prop="SeriesInstanceUID" label="Series Instance UID" />
         <el-table-column prop="patientGender" label="性别" />
+        <el-table-column prop="patientGender" label="年龄" />
         <el-table-column prop="uploadDateTime" label="上传时间" />
         <el-table-column label="操作">
           <template v-slot="scope">
