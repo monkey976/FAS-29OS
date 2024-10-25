@@ -31,6 +31,11 @@ import CaseHistoryManager from '@/views/CaseHistory/caseHistoryManager.vue'
 
 import Demo from '@/views/Dicom/demo.vue'
 import CaseDetail from '@/views/CaseHistory/CaseDetail.vue'
+
+import Segment from '@/views/Doctor/Segment.vue'
+import CaseNussFusion from '@/views/Doctor/CaseNussFusion.vue'
+import TwoModelFusion from '@/views/Doctor/TwoModelFusion.vue'
+import AIGCNussSlicing from '@/views/Doctor/AIGCNussSlicing.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -196,8 +201,39 @@ const router = createRouter({
           meta: {
             requiresAuth: true // 需要身份验证portal
           }
+        },
+        {
+          path: '/doctor/segment',
+          name: 'segment',
+          component: Segment,
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: '/doctor/casenussfusion',
+          name: 'casenussfusion',
+          component: CaseNussFusion,
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: '/doctor/TwoModelFusion',
+          name: 'TwoModelFusion',
+          component: TwoModelFusion,
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: '/doctor/AIGCNussSlicing',
+          name: 'AIGCNussSlicing',
+          component: AIGCNussSlicing,
+          meta: {
+            requiresAuth: false
+          }
         }
-        
       ]
     },
     {

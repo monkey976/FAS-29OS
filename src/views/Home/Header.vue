@@ -125,16 +125,17 @@ const dialogVisibleEdit = ref(false)
 const userId = getUserId()
 const userName = getUserName()
 const userToken = localStorage.getItem('token')
-const userImg = localStorage.getItem('userImg') || '' // 默认头像
+const userImg = localStorage.getItem('userImg') || userMyImg // 默认头像
 
 // 使用响应式变量，判断是否为空
-const filterPath = computed(() => {
-  if (userImg == undefined || userImg == null || userImg == '' || userImg == 'undefined') {
-    return userMyImg
-  } else {
-    return ref(`${FILTER_PATH_USER}${userImg}`)
-  }
-})
+const filterPath = ref(`${FILTER_PATH_USER}${userImg}`)
+// const filterPath = computed(() => {
+//   if (userImg == undefined || userImg == null || userImg == '' || userImg == 'undefined') {
+//     return userMyImg
+//   } else {
+//     return ref(`${FILTER_PATH_USER}${userImg}`)
+//   }
+// })
 // 存储用户信息
 const myInfo = reactive({
   userId: '',
