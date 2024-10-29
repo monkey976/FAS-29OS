@@ -52,6 +52,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'index',
+      redirect: '/portal',
       component: Layout,
       meta: {
         requiresAuth: true // 需要身份验证
