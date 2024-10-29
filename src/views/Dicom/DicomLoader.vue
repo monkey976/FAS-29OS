@@ -4,8 +4,23 @@
 
     <div class="w-1/2 mx-auto flex justify-center gap-4 text-center bg-slate-900 text-white p-4">
       <diV>
-        <label for="" class="label">上传文件：</label>
         <input type="file" class="file-input" multiple @change="handleChange" />
+        <!-- <a-upload
+          v-model:file-list="fileList"
+          name="avatar"
+          list-type="picture-card"
+          class="avatar-uploader"
+          :show-upload-list="false"
+          @change="handleChange"
+          multiple
+        >
+          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+          <div v-else>
+            <loading-outlined v-if="loading"></loading-outlined>
+            <plus-outlined v-else></plus-outlined>
+            <div class="ant-upload-text">点击或拖拽文件到此处上传</div>
+          </div>
+        </a-upload>
         <el-upload
           class="upload-demo"
           drag
@@ -17,15 +32,14 @@
         >
           <el-icon class="el-icon--upload"><Plus /></el-icon>
           <div class="el-upload__text">点击或拖拽文件到此处上传</div>
-          <div class="el-upload__text">支持Dicom文件</div>
-          <!-- <template #tip>
+          <div class="el-upload__text">支持Dicom文件</div> -->
+        <!-- <template #tip>
           <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
         </template> -->
-        </el-upload>
+        <!-- </el-upload> -->
       </diV>
 
       <diV>
-        <label class="label">上传文件夹:</label>
         <input
           type="file"
           class="file-input"
@@ -33,23 +47,37 @@
           directory
           @change="handleFolderSelect"
         />
+        <!-- <a-upload
+          v-model:file-list="fileList"
+          name="avatar"
+          list-type="picture-card"
+          class="avatar-uploader"
+          :show-upload-list="false"
+          @change="handleFolderSelect"
+          directory
+        >
+          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+          <div v-else>
+            <loading-outlined v-if="loading"></loading-outlined>
+            <plus-outlined v-else></plus-outlined>
+            <div class="ant-upload-text">点击或拖拽文件夹到此处上传</div>
+          </div>
+        </a-upload>
         <el-upload
           class="upload-demo"
           drag
           :on-change="handleFolderSelect"
-          multiple
           :auto-upload="false"
           :show-file-list="false"
           webkitdirectory
-          directory
         >
           <el-icon class="el-icon--upload"><Plus /></el-icon>
           <div class="el-upload__text">点击或拖拽文件夹到此处上传</div>
-          <div class="el-upload__text">支持文件夹内为Dicom文件</div>
-          <!-- <template #tip>
+          <div class="el-upload__text">支持文件夹内为Dicom文件</div> -->
+        <!-- <template #tip>
           <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
         </template> -->
-        </el-upload>
+        <!-- </el-upload> -->
       </diV>
     </div>
     <div class="file-upload">
@@ -335,45 +363,36 @@ function activeTools() {
 }
 
 //上传文件
-function handleChange(event) {
+function handleChange(evt) {
   // // 阻止事件冒泡
-  // evt.stopPropagation()
-  // evt.preventDefault()
-
-  // cache.purgeCache()
-
-  // const files = evt.target.files
-  // const i = 0
-  // for (let i = 0; i < files.length; i++) {
-  //   formData.value.push({ key: i + 1, value: files[i] })
-  // }
-
-  // const imageIds = []
-  // Array.from(files).forEach((file) => {
-  //   const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file)
-  //   imageIds.push(imageId)
-  // })
-
-  // fileImageIds.value = imageIds
-  // loadAndViewImage(imageIds)
-
+  evt.stopPropagation()
+  evt.preventDefault()
+  cache.purgeCache()
+  const files = evt.target.files
+  const i = 0
+  for (let i = 0; i < files.length; i++) {
+    formData.value.push({ key: i + 1, value: files[i] })
+  }
+  const imageIds = []
+  Array.from(files).forEach((file) => {
+    const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file)
+    imageIds.push(imageId)
+  })
+  fileImageIds.value = imageIds
+  loadAndViewImage(imageIds)
   // 修改后----------------------------------------------------
   // 直接从 event.raw 获取文件对象
-  const file = event.raw
-  console.log('Selected File:', file) // 输出文件信息
-
-  // 清除之前的缓存
-  cache.purgeCache()
-
-  const imageIds = []
-  const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file)
-  imageIds.push(imageId)
-
-  fileImageIds.value = imageIds
-  // // 在每次添加文件后检查是否是最后一个文件
-  // checkIfAllFilesLoaded(event)
-
-  loadAndViewImage(imageIds) // 加载并显示影像
+  // const file = event.raw
+  // console.log('Selected File:', file) // 输出文件信息
+  // // 清除之前的缓存
+  // cache.purgeCache()
+  // const imageIds = []
+  // const imageId = cornerstoneDICOMImageLoader.wadouri.fileManager.add(file)
+  // imageIds.push(imageId)
+  // fileImageIds.value = imageIds
+  // // // 在每次添加文件后检查是否是最后一个文件
+  // // checkIfAllFilesLoaded(event)
+  // loadAndViewImage(imageIds) // 加载并显示影像
 }
 // 检查是否所有文件都已经加载完毕
 const checkIfAllFilesLoaded = (files) => {
@@ -528,8 +547,8 @@ input {
 }
 
 .cornerstone-item {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   border: 2px solid #60a5fa;
   border-radius: 15px;
   transition:

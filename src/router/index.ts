@@ -6,7 +6,13 @@ import Layout from '../views/Home/Layout.vue'
 import Login from '../views/Login/Login.vue'
 
 import LayoutUser from '../views/HomeUser/Layout.vue'
-
+import CompanyIntro from '../views/HomeUser/CompanyIntro.vue'
+import ChairmanSpeech from '../views/HomeUser/ChairmanSpeech.vue'
+import TopicAnalysis from '../views/HomeUser/TopicAnalysis.vue'
+import NewsPage from '../views/HomeUser/NewsPage.vue'
+import ContactUs from '../views/HomeUser/ContactUs.vue'
+import ProductIntro from '../views/HomeUser/ProductIntro.vue'
+import Service from '../views/HomeUser/Service.vue'
 import NotFound from '../views/Error/404.vue'
 
 import Portal from '../views/Home/Portal.vue'
@@ -20,7 +26,16 @@ import PortalUser from '../views/HomeUser/Portal.vue'
 import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
 
+import CaseHistory from '@/views/CaseHistory/CaseHistory.vue'
+import CaseHistoryManager from '@/views/CaseHistory/caseHistoryManager.vue'
+
 import Demo from '@/views/Dicom/demo.vue'
+import CaseDetail from '@/views/CaseHistory/CaseDetail.vue'
+
+import Segment from '@/views/Doctor/Segment.vue'
+import CaseNussFusion from '@/views/Doctor/CaseNussFusion.vue'
+import TwoModelFusion from '@/views/Doctor/TwoModelFusion.vue'
+import AIGCNussSlicing from '@/views/Doctor/AIGCNussSlicing.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +52,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'index',
+      redirect: '/portal',
       component: Layout,
       meta: {
         requiresAuth: true // 需要身份验证
@@ -52,6 +68,41 @@ const router = createRouter({
           path: '/portaluser',
           name: 'portaluser',
           component: PortalUser
+        },
+        {
+          path: '/company',
+          name: 'company',
+          component: CompanyIntro
+        },
+        {
+          path: '/ChairmanSpeech',
+          name: 'ChairmanSpeech',
+          component: ChairmanSpeech
+        },
+        {
+          path: '/TopicAnalysis',
+          name: 'TopicAnalysis',
+          component: TopicAnalysis
+        },
+        {
+          path: '/NewsPage',
+          name: 'NewsPage',
+          component: NewsPage
+        },
+        {
+          path: '/ContactUs',
+          name: 'ContactUs',
+          component: ContactUs
+        },
+        {
+          path: '/ProductIntro',
+          name: 'ProductIntro',
+          component: ProductIntro
+        },
+        {
+          path: '/Service',
+          name: 'Service',
+          component: Service
         }
       ]
     },
@@ -126,6 +177,62 @@ const router = createRouter({
           component: NiiLoader,
           meta: {
             requiresAuth: false // 需要身份验证portal
+          }
+        },
+        {
+          path: '/caseHistory',
+          name: 'caseHistory',
+          component: CaseHistory,
+          meta: {
+            requiresAuth: false // 需要身份验证portal
+          }
+        },
+        {
+          path: '/caseHistoryManager',
+          name: 'caseHistoryManager',
+          component: CaseHistoryManager,
+          meta: {
+            requiresAuth: true // 需要身份验证portal
+          }
+        },
+        {
+          path: '/cases/:caseId',
+          name: 'CaseDetails',
+          component: CaseDetail,
+          meta: {
+            requiresAuth: true // 需要身份验证portal
+          }
+        },
+        {
+          path: '/doctor/segment',
+          name: 'segment',
+          component: Segment,
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: '/doctor/casenussfusion',
+          name: 'casenussfusion',
+          component: CaseNussFusion,
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: '/doctor/TwoModelFusion',
+          name: 'TwoModelFusion',
+          component: TwoModelFusion,
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: '/doctor/AIGCNussSlicing',
+          name: 'AIGCNussSlicing',
+          component: AIGCNussSlicing,
+          meta: {
+            requiresAuth: false
           }
         }
       ]

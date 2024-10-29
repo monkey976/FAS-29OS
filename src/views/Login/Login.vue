@@ -5,13 +5,13 @@
         <div :class="`flex-1 bg-gray-500 bg-opacity-20 relative p-30px lt-xl:hidden`">
           <!-- logo和项目名称 -->
           <div class="flex items-center relative text-white">
-            <img src="../../assets/img/logo.png" alt="" id="logoImg" />
+            <img src="@/assets/img/logo.png" alt="" id="logoImg" />
             <span class="text-20px font-bold">FAS-29OS</span>
           </div>
           <!-- 图像区域 -->
           <div class="text-gray-200 text-sm flex items-center justify-center h-[calc(100%-60px)]">
             <div class="text-center">
-              <img class="w-350px" src="../../assets/svg/login-box-bg.svg" key="1" alt="" />
+              <img class="w-350px" src="@/assets/svg/login-box-bg.svg" key="1" alt="" />
               <span class="text-20px font-bold">欢迎使用FAS-29OS</span>
             </div>
             <div></div>

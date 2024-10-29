@@ -2,7 +2,7 @@
  * 1、比较token时间和设置的时间
  * 2、是否token时间已经超时
  * 3、超时退出登录 */
-import { TOKEN_TIME, TOKEN_TIME_VALUE, USER_ID, USER_NAME } from './constant'
+import { TOKEN_TIME, TOKEN_TIME_VALUE, USER_ID, USER_NAME, PROFILE_PHOTO } from './constant'
 
 //登录时设置时间
 export const setTokenTime = () => {
@@ -22,9 +22,10 @@ export const diffTokenTime = () => {
 }
 
 //登录时设置用户信息
-export const setUserId = (thisUserId, thisUserName) => {
+export const setUserId = (thisUserId, thisUserName, thisProfilePhoto) => {
   localStorage.setItem(USER_ID, thisUserId)
   localStorage.setItem(USER_NAME, thisUserName)
+  localStorage.setItem(PROFILE_PHOTO, thisProfilePhoto)
 }
 
 //获取登录用户id
@@ -35,4 +36,9 @@ export const getUserId = () => {
 //获取登录用户名称
 export const getUserName = () => {
   return localStorage.getItem(USER_NAME)
+}
+
+//获取登录用户头像
+export const getProfilePhoto = () => {
+  return localStorage.getItem(PROFILE_PHOTO)
 }

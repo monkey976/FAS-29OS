@@ -2,7 +2,7 @@
   <div>
     <!-- logo和项目名称 -->
     <div class="flex items-center relative text-white p-15px">
-      <img src="../../assets/img/logo.png" alt="" id="logoImg" />
+      <img src="@/assets/img/logo.png" alt="" id="logoImg" />
       <span class="text-20px font-bold">FAS-29OS</span>
     </div>
     <el-menu
@@ -70,6 +70,27 @@ const menuList = reactive([
     children: []
   },
   {
+    id: 2,
+    menuName: '系统管理模块',
+    pId: '0',
+    type: 'menu',
+    icon: 'List',
+    routeName: '',
+    routeUrl: '',
+    children: [
+      {
+        id: 21,
+        menuName: '用户管理',
+        pId: '2',
+        type: 'menu',
+        icon: '',
+        routeName: 'user',
+        routeUrl: '/user',
+        children: []
+      }
+    ]
+  },
+  {
     id: 3,
     menuName: '病患模块',
     pId: '0',
@@ -87,7 +108,17 @@ const menuList = reactive([
         routeName: 'caseHistory',
         routeUrl: '/caseHistory',
         children: []
-      }
+      },
+      {
+        id: 33,
+        menuName: '病历管理',
+        pId: '3',
+        type: 'menu',
+        icon: '',
+        routeName: 'caseHistoryManager',
+        routeUrl: '/caseHistoryManager',
+        children: []
+      },
     ]
   }
 ])

@@ -1,4 +1,4 @@
-import './assets/main.css'
+import '@/assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -11,6 +11,10 @@ import ElementPlus from 'element-plus'
 import * as ELIconModules from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+
+import 'ant-design-vue/dist/reset.css' // 引入Ant Design Vue的样式
+import Antd from 'ant-design-vue'
+
 import axios from '@/plugins/axios'
 
 const app = createApp(App)
@@ -25,6 +29,7 @@ app.use(createPinia())
 app.use(ElementPlus, { locale: zhCn })
 app.use(ELIconModules)
 app.use(router)
+app.use(Antd) // 使用Ant Design Vue
 
 import 'virtual:windi.css'
 

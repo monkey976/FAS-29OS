@@ -89,8 +89,8 @@ const refreshCode = () => {
 
 //实体类（登录）
 const loginForm = reactive({
-  username: 'admin',
-  password: 'admin123',
+  username: 'wsm',
+  password: 'w123456789',
   verifyCode: ''
 })
 //是登录还是注册
@@ -144,14 +144,19 @@ const loginBtnClick = async () => {
       // const response = true
       if (response.code == 200) {
         //response.code == 200
+        ElNotification({
+          title: '登录成功',
+          message: '欢迎您使用FAS-29OS系统',
+          type: 'success'
+        })
         setTokenTime()
-        setUserId(response.data.UserId, response.data.UserName)
-        localStorage.setItem('token', response.data.Token)
+        setUserId(response.data.userId, response.data.userName, response.data.profilePhoto)
+        localStorage.setItem('token', response.data.token)
         router.push('/home')
       } else {
         ElNotification({
           title: '登录错误',
-          message: response.message,
+          message: response.msg,
           type: 'error'
         })
       }

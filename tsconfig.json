@@ -13,5 +13,17 @@
   ],
   "compilerOptions": {
     "types": ["vue", "node"]
+    // "suppressImplicitAnyIndexErrors": true,
+    // "noImplicitAny": false,
+    // "target": "esnext",
+    // "module": "esnext",
+    // "moduleResolution": "node",
+    // "strict": true,
+    // "jsx": "preserve",
+    // "esModuleInterop": true,
+    // "skipLibCheck": true,
+    // "forceConsistentCasingInFileNames": true
   }
+  // "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  // "exclude": ["node_modules"]
 }

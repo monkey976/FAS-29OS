@@ -4,17 +4,17 @@
     <div class="flex common-layout justify-between items-center">
       <div>
         <div class="flex items-center relative pt-15px">
-          <img src="../../assets/img/logo.png" alt="" id="logoImg" />
-          <span class="text-20px font-bold">FAS-29OS</span>
+          <img src="@/assets/img/logo.png" alt="" id="logoImg" />
+          <span class="text-25px font-bold">FAS-29OS</span>
         </div>
       </div>
       <div>
         <div class="flex items-center relative pt-15px">
           <div>
-            <el-avatar src="/src/assets/img/userImg.png" />
+            <el-avatar src="@/assets/img/userImg.png" />
           </div>
           <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link">
+            <span class="el-dropdown-link text-[20px]">
               wushaomin
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -34,7 +34,7 @@
             <div class="flex items-center p-4 bg-white rounded-md">
               <!-- 左侧头像 -->
               <div class="w-24 h-24 flex justify-center items-center">
-                <el-avatar src="/src/assets/img/userImg.png" size="large" alt="User Avatar" />
+                <el-avatar src="@/assets/img/userImg.png" size="large" alt="User Avatar" />
               </div>
 
               <!-- 右侧用户信息 -->
@@ -77,26 +77,41 @@
         </div>
       </div>
     </div>
-
-    <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal">
-      <template v-for="item in menuList" :key="item.id">
-        <el-sub-menu v-if="item.children.length > 0" :index="item.id.toString()">
-          <template #title>
-            <el-icon> <component :is="item.icon" /> </el-icon>
-            <span>{{ item.menuName }}</span>
-          </template>
+    <div class="menu-container">
+      <el-menu
+        :default-active="defaultActive"
+        class="el-menu-demo"
+        mode="horizontal"
+        style="background-color: transparent; border: 0"
+      >
+        <template v-for="item in menuList" :key="item.id">
+          <el-sub-menu v-if="item.children.length > 0" :index="item.id.toString()">
+            <template #title>
+              <el-icon> <component :is="item.icon" /> </el-icon>
+              <span class="text-[20px]">{{ item.menuName }}</span>
+            </template>
+            <el-menu-item
+              v-for="itemChildren in item.children"
+              :key="itemChildren.id"
+              :index="itemChildren.routeUrl"
+              class="text-[20px]"
+              @click="navigate(itemChildren.routeUrl)"
+            >
+              {{ itemChildren.menuName }}
+            </el-menu-item>
+          </el-sub-menu>
           <el-menu-item
-            :index="item.id"
-            v-for="itemChildren in item.children"
-            :key="itemChildren.id"
-            >{{ itemChildren.menuName }}
+            v-else
+            :index="item.routeUrl"
+            :key="item.id"
+            class="text-[20px]"
+            @click="navigate(item.routeUrl)"
+          >
+            {{ item.menuName }}
           </el-menu-item>
-        </el-sub-menu>
-        <el-menu-item v-else :index="item.routeUrl" :key="item.id">
-          {{ item.menuName }}
-        </el-menu-item>
-      </template>
-    </el-menu>
+        </template>
+      </el-menu>
+    </div>
   </div>
 </template>
 
@@ -112,7 +127,7 @@ const router = useRouter()
 const refThis = ref(null)
 
 const isCollapse = ref(false) //菜单打开展示全还是不打开展示图标
-const defaultActive = ref(sessionStorage.getItem('path') || '/portaluser')
+const defaultActive = ref(sessionStorage.getItem('path') || '/homeuser')
 
 const dialogVisible = ref(false)
 // 用户名数据，可以从后端获取
@@ -120,6 +135,12 @@ const userName = ref('wushaomin')
 const userId = 18
 const userToken = 'wushaomin'
 
+//存当前点击的路径
+const navigate = (path) => {
+  sessionStorage.setItem('path', path)
+  defaultActive.value = path
+  router.push(path)
+}
 // 处理下拉菜单选项的逻辑
 const handleCommand = (command: string) => {
   if (command === 'profile') {
@@ -147,30 +168,93 @@ const menuList = reactive([
     menuName: '公司介绍',
     pId: '0',
     type: 'menu',
-    icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
-    children: []
+    icon: '',
+    routeName: '#',
+    routeUrl: '#',
+    children: [
+      {
+        id: 31,
+        menuName: '公司介绍',
+        pId: '3',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'company',
+        routeUrl: '/company',
+        children: []
+      },
+      {
+        id: 32,
+        menuName: '董事长致辞',
+        pId: '3',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'ChairmanSpeech',
+        routeUrl: '/ChairmanSpeech',
+        children: []
+      }
+    ]
   },
   {
     id: 4,
     menuName: '产品服务',
     pId: '0',
     type: 'menu',
-    icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
-    children: []
+    icon: '',
+    routeName: '',
+    routeUrl: '',
+    children: [
+      {
+        id: 41,
+        menuName: '产品介绍',
+        pId: '4',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'ProductIntro',
+        routeUrl: '/ProductIntro',
+        children: []
+      },
+      {
+        id: 42,
+        menuName: '服务介绍',
+        pId: '4',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'Service',
+        routeUrl: '/Service',
+        children: []
+      }
+    ]
   },
   {
     id: 2,
     menuName: '新闻中心',
     pId: '0',
     type: 'menu',
-    icon: 'location',
+    icon: '',
     routeName: 'portaluser',
     routeUrl: '/portaluser',
-    children: []
+    children: [
+      {
+        id: 21,
+        menuName: '专题分析',
+        pId: '2',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'TopicAnalysis',
+        routeUrl: '/TopicAnalysis',
+        children: []
+      },
+      {
+        id: 22,
+        menuName: '新闻报道',
+        pId: '2',
+        type: 'menu',
+        icon: 'location',
+        routeName: 'NewsPage',
+        routeUrl: '/NewsPage',
+        children: []
+      }
+    ]
   },
   {
     id: 5,
@@ -178,8 +262,8 @@ const menuList = reactive([
     pId: '0',
     type: 'menu',
     icon: 'location',
-    routeName: 'portaluser',
-    routeUrl: '/portaluser',
+    routeName: 'ContactUs',
+    routeUrl: '/ContactUs',
     children: []
   }
 ])
@@ -237,16 +321,6 @@ const viewProfile = async () => {
 <style scoped>
 /* 添加你的样式 */
 
-.el-menu {
-  /* 目录样式 */
-  --el-menu-text-color: var(--left-menu-text-color);
-  --el-menu-hover-text-color: var(--left-menu-text-color);
-  --el-menu-bg-color: var(--left-menu-bg-color);
-  --el-menu-hover-bg-color: rgb(168, 168, 168);
-  --el-menu-active-color: var(--left-menu-text-active-color);
-  --el-menu-level: 0;
-  border-right: none;
-}
 /* 图片大小设置 */
 img {
   max-width: 15%;
@@ -266,5 +340,15 @@ img {
 
 .el-dropdown-link {
   cursor: pointer;
+}
+.menu-container {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中（如果需要） */
+}
+.el-menu-demo {
+  display: flex; /* 设置为flexbox布局 */
+  justify-content: center; /* 使菜单项水平居中 */
+  min-width: 100%; /* 确保菜单容器宽度足够 */
 }
 </style>
