@@ -27,9 +27,9 @@ import DicomLoader from '@/views/Dicom/DicomLoader.vue'
 import NiiLoader from '@/views/Dicom/NiiLoader.vue'
 
 import CaseHistory from '@/views/CaseHistory/CaseHistory.vue'
-import CaseHistoryManager from '@/views/CaseHistory/caseHistoryManager.vue'
+import CaseHistoryManager from '@/views/CaseHistory/CaseHistoryManager.vue'
 
-import Demo from '@/views/Dicom/demo.vue'
+import Demo from '@/views/Dicom/Demo.vue'
 import CaseDetail from '@/views/CaseHistory/CaseDetail.vue'
 
 import Segment from '@/views/Doctor/Segment.vue'
